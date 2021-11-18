@@ -46,8 +46,6 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
           dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -60,7 +58,7 @@ jobs:
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
 
     - name: Build
-      run: dotnet build ./GodotHub/GodotHub.csproj --no-restore
+      run: dotnet build ./GodotHub/GodotHub.csproj
     
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
