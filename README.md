@@ -1,6 +1,13 @@
 # godot-hub 
 
-[![CI](https://github.com/mattiascibien/godot-hub/actions/workflows/ci.yml/badge.svg)](https://github.com/mattiascibien/godot-hub/actions/workflows/ci.yml) ![GitHub](https://img.shields.io/github/license/mattiascibien/godot-hub) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/mattiascibien/godot-hub)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mattiascibien_godot-hub&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=mattiascibien_godot-hub)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=mattiascibien_godot-hub&metric=bugs)](https://sonarcloud.io/summary/new_code?id=mattiascibien_godot-hub)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=mattiascibien_godot-hub&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=mattiascibien_godot-hub)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=mattiascibien_godot-hub&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=mattiascibien_godot-hub)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=mattiascibien_godot-hub&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=mattiascibien_godot-hub)
+[![CI](https://github.com/mattiascibien/godot-hub/actions/workflows/ci.yml/badge.svg)](https://github.com/mattiascibien/godot-hub/actions/workflows/ci.yml) 
+![GitHub](https://img.shields.io/github/license/mattiascibien/godot-hub) 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/mattiascibien/godot-hub)
 
 Command line tool to install and use godot versions
 
