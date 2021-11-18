@@ -62,7 +62,7 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: godot-hub-$${{ steps.gitversion.outputs.semVer }}
+          name: godot-hub-${{ steps.gitversion.outputs.semVer }}
           path: |
             *.zip
             *.tar.gz
