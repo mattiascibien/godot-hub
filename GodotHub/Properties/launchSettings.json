@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "GodotHub": {
+      "commandName": "Project",
+      "commandLineArgs": "run --debug --fullscreen",
+      "workingDirectory": "C:\\src\\MeshViewer"
+    }
+  }
+}
