@@ -20,19 +20,19 @@ namespace GodotHub.Commands
             
             Add(new Argument<string[]>("cmdline", "The command line to pass to godot"));
 
-            Handler = CommandHandler.Create<string?, string[]>(async (version, cmdline) =>
+            Handler = CommandHandler.Create<string?, string[]>(async (useVersion, cmdline) =>
             {
-                if(string.IsNullOrEmpty(version))
+                if(string.IsNullOrEmpty(useVersion))
                 {
                     var versionFile = Directory.EnumerateFiles(Directory.GetCurrentDirectory()).FirstOrDefault(f => Path.GetFileName(f) == Constants.VERSION_FILE_NAME);
                     if(versionFile != null)
                     {
-                        version = (await File.ReadAllTextAsync(versionFile).ConfigureAwait(false)).Trim();
-                        Console.WriteLine($"Using version {version} from {Constants.VERSION_FILE_NAME}");
+                        useVersion = (await File.ReadAllTextAsync(versionFile).ConfigureAwait(false)).Trim();
+                        Console.WriteLine($"Using version {useVersion} from {Constants.VERSION_FILE_NAME}");
                     }
                 }
-                if(version != null)
-                    new InstallationManager(Constants.InstallationDirectory).Launch(version, cmdline);
+                if(useVersion != null)
+                    new InstallationManager(Constants.InstallationDirectory).Launch(useVersion, cmdline);
             });
         }
     }
