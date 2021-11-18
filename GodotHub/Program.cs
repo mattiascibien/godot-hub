@@ -13,8 +13,8 @@ var rootCommand = new RootCommand
     new InstallCommand(),
     new UninstallCommand(),
     new CreateGodotVersionFileCommand(),
-    //new RegisterCommand(),
-    //new UnregisterCommand(),
+    new RegisterCommand(),
+    new UnregisterCommand(),
     //new SetDefaultCommand(),
 };
 

@@ -17,7 +17,7 @@ namespace GodotHub.Commands
 
             Handler = CommandHandler.Create<string>((customversion) =>
             {
-                if(LinkCreator.IsLink(customversion))
+                if(LinkCreator.IsLink(Path.Combine(Constants.InstallationDirectory, customversion)))
                 {
                     LinkCreator.DeleteFolderLink(Constants.InstallationDirectory, customversion);
                     Console.WriteLine($"Unregistered {customversion}");
