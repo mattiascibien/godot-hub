@@ -75,7 +75,6 @@ namespace GodotHub.Online
             }
         }
 
-
         public void Dispose()
         {
             Dispose(true);
