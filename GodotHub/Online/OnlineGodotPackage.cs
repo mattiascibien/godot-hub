@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace GodotHub.Online
 {
-
     public class OnlineGodotPackage : IOsSpecific
     {
         public bool IsMono { get; }
@@ -55,7 +54,7 @@ namespace GodotHub.Online
             }
             else
             {
-                // TODO: exception
+                throw new UnsupportedArchitectureException(FileName);
             }
         }
     }

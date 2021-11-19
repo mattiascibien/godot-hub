@@ -6,7 +6,7 @@ namespace GodotHub.Local
 {
     public class EditorExecutable : IOsSpecific
     {
-        static readonly Dictionary<string, int> Priorities = new Dictionary<string, int>()
+        private static readonly Dictionary<string, int> Priorities = new Dictionary<string, int>()
         {
             { ".tools.", 1000 },
             { ".opt.", 900 },
@@ -32,7 +32,9 @@ namespace GodotHub.Local
             IsMono = fileName.Contains("mono"); // this is needed for 
 
             if (extension == ".exe")
+            {
                 OperatingSystem = GodotOperatingSystem.Windows;
+            }
             else
             {
                 if(fileName.Contains("headless"))

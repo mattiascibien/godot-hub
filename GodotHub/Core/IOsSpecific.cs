@@ -27,11 +27,10 @@ namespace GodotHub.Core
                     case GodotOperatingSystem.OSX:
                         return osPlatform == OSPlatform.OSX;
                     case GodotOperatingSystem.X11:
-                        return osPlatform == OSPlatform.Linux || osPlatform == OSPlatform.FreeBSD; //TODO: check FreeBSD
+                        return osPlatform == OSPlatform.Linux || osPlatform == OSPlatform.FreeBSD;
                     case GodotOperatingSystem.LinuxHeadless:
                     case GodotOperatingSystem.LinuxServer:
                         return osPlatform == OSPlatform.Linux;
-
                 }
             }
 

@@ -20,7 +20,12 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>godot, gamedev, dotnet-tool</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <CodeAnalysisRuleSet>..\.sonarlint\mattiascibien_godot-hubcsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\mattiascibien_godot-hub\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\README.md">
