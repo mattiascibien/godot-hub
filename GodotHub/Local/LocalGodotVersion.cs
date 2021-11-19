@@ -1,5 +1,6 @@
 ﻿using GodotHub.Core;
 using GodotHub.Online;
+using System.Runtime.InteropServices;
 
 namespace GodotHub.Local
 {
@@ -28,10 +29,15 @@ namespace GodotHub.Local
             IsExternal = LinkCreator.IsLink(InstallationPath);
         }
 
-        public string? GetEditorPath()
+        public IEnumerable<EditorExecutable> GetSupportedEditorExecutables(OSPlatform osPlatform, Architecture architecture)
         {
-            // Get the first file in the installation path directory
-            return Directory.EnumerateFiles(InstallationPath).FirstOrDefault();
+            // find all the executables for the platforms
+            // and return the one that has the highest priority
+            return Directory.EnumerateFiles(InstallationPath)
+                .Where(x => EditorExecutable.IsEditorExecutable(x))
+                .Select(x => new EditorExecutable(x))
+                .Where(x => x.IsSupported(osPlatform, architecture))
+                .OrderByDescending(x => x.Priority);
         }
 
 

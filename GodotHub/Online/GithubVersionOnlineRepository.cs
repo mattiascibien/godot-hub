@@ -4,6 +4,14 @@ namespace GodotHub.Online
 {
     public class GithubVersionOnlineRepository : IOnlineRepository
     {
+        private static readonly string[] Exclusions = new[]
+        {
+            ".aar", // exclude android
+            ".tar.xz",
+            ".tpz",
+            ".txt"
+        };
+
         private const string OWNER = "godotengine";
         private const string REPO = "godot";
 
@@ -43,8 +51,8 @@ namespace GodotHub.Online
 
             foreach (var asset in release.Assets)
             {
-                // TODO: handle headless case
-                if(asset.Name.Contains("headless") || asset.Name.Contains("server"))
+                // exclude packages which are not supported
+                if (Exclusions.Any(asset.Name.Contains))
                     continue;
 
                 var godotPackage = new OnlineGodotPackage(asset.BrowserDownloadUrl);

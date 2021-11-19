@@ -1,15 +1,10 @@
+using GodotHub.Core;
 using System.Runtime.InteropServices;
 
 namespace GodotHub.Online
 {
-    public enum PackageOperatingSystem
-    {
-        Windows,
-        OSX,
-        X11
-    }
 
-    public class OnlineGodotPackage
+    public class OnlineGodotPackage : IOsSpecific
     {
         public bool IsMono { get; }
 
@@ -17,29 +12,11 @@ namespace GodotHub.Online
 
         public Uri DownloadUrl { get; }
 
-        public PackageOperatingSystem OperatingSystem;
+        public GodotOperatingSystem OperatingSystem {  get; }
 
-        public Architecture Architecture;
+        public Architecture Architecture { get; }
 
         public OnlineGodotPackage(string url) : this(new Uri(url)) { }
-
-        public bool IsSupported(OSPlatform osPlatform, Architecture architecture)
-        {
-            if (Architecture == architecture)
-            {
-                switch (OperatingSystem)
-                {
-                    case PackageOperatingSystem.Windows:
-                        return osPlatform == OSPlatform.Windows;
-                    case PackageOperatingSystem.OSX:
-                        return osPlatform == OSPlatform.OSX;
-                    case PackageOperatingSystem.X11:
-                        return osPlatform == OSPlatform.Linux || osPlatform == OSPlatform.FreeBSD; //TODO: check FreeBSD
-                }
-            }
-
-            return false;
-        }
 
         public OnlineGodotPackage(Uri url)
         {
@@ -49,19 +26,23 @@ namespace GodotHub.Online
 
             if (FileName.Contains("win"))
             {
-                OperatingSystem = PackageOperatingSystem.Windows;
+                OperatingSystem = GodotOperatingSystem.Windows;
             }
             else if (FileName.Contains("x11"))
             {
-                OperatingSystem = PackageOperatingSystem.X11;
+                OperatingSystem = GodotOperatingSystem.X11;
             }
             else if (FileName.Contains("osx"))
             {
-                OperatingSystem = PackageOperatingSystem.OSX;
+                OperatingSystem = GodotOperatingSystem.OSX;
             }
-            else
+            else if (FileName.Contains("server"))
             {
-                // TODO: exception
+                OperatingSystem = GodotOperatingSystem.LinuxServer;
+            }
+            else if (FileName.Contains("headless"))
+            {
+                OperatingSystem = GodotOperatingSystem.LinuxHeadless;
             }
 
             if (FileName.Contains("32"))
