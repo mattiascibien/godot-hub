@@ -41,7 +41,7 @@ namespace GodotHub.Local
                     OperatingSystem = GodotOperatingSystem.LinuxHeadless;
                 else if (fileName.Contains("server"))
                     OperatingSystem = GodotOperatingSystem.LinuxServer;
-                else if (fileName.Contains("x11"))
+                else if (fileName.Contains("x11") || fileName.Contains("linuxbsd"))
                     OperatingSystem = GodotOperatingSystem.X11;
                 else if (fileName.Contains("osx"))
                     OperatingSystem = GodotOperatingSystem.OSX;
