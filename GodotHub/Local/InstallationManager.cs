@@ -41,7 +41,7 @@ namespace GodotHub.Local
                     destinationDirectory = Path.Combine(destinationDirectory, versionName);
                 }
 
-                archive.ExtractToDirectory(destinationDirectory);
+                archive.ExtractToDirectory(destinationDirectory, true);
 
                 if(isMono)
                 {
