@@ -54,7 +54,7 @@ namespace GodotHub.Online
             }
             else
             {
-                throw new UnsupportedArchitectureException(FileName);
+
             }
         }
     }
