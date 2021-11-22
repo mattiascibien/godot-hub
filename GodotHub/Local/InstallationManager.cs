@@ -50,7 +50,6 @@ namespace GodotHub.Local
 
                     Directory.Move(Path.Combine(destinationDirectory, directoryToRename), Path.Combine(destinationDirectory, $"{versionName}-mono"));
                 }
-
             }).ConfigureAwait(false);
         }
 

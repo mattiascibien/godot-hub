@@ -30,7 +30,7 @@ namespace GodotHub.Core
         {
             string path = Path.Combine(currentDirectory, folderLink);
             if (OperatingSystem.IsWindows())
-            {             
+            {
                 UACHelper.UACHelper.StartElevated(new ProcessStartInfo
                 {
                     FileName = "cmd.exe",

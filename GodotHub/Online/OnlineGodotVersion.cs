@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace GodotHub.Online
 {
-    public class OnlineGodotVersion : GodotVersion
+    public sealed class OnlineGodotVersion : GodotVersion
     {
         public override Version Version { get; }
 
@@ -33,11 +33,6 @@ namespace GodotHub.Online
             string version = Version.ToString();
             if (!IsStable)
                 version += $"-{PostFix}";
-
-            //if (HasMono)
-            //{
-            //    return $"{version}-mono";
-            //}
 
             return version;
         }

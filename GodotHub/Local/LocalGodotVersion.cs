@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace GodotHub.Local
 {
-    public class LocalGodotVersion : GodotVersion
+    public sealed class LocalGodotVersion : GodotVersion
     {
         public override Version Version { get; }
 

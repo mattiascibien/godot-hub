@@ -24,5 +24,9 @@
 
             return true;
         }
+
+        public override bool Equals(object? obj) => Equals(obj as GodotVersion);
+
+        public override int GetHashCode() => HashCode.Combine(Version, PostFix, HasMono);
     }
 }

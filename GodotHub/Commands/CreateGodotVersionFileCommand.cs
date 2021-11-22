@@ -17,25 +17,22 @@ namespace GodotHub.Commands
 
             Handler = CommandHandler.Create<string>(async (version) =>
             {
-                if(File.Exists(Constants.VERSION_FILE_NAME))
+                if (File.Exists(Constants.VERSION_FILE_NAME))
                 {
                     Console.WriteLine($"A {Constants.VERSION_FILE_NAME} already exists in the current directory");
                     return;
                 }
+
+                var installedVersion = new InstallationManager(Constants.InstallationDirectory).FindInstalledVersion(version);
+
+                if (installedVersion != null)
+                {
+                    await File.WriteAllTextAsync(Constants.VERSION_FILE_NAME, version).ConfigureAwait(false);
+                    Console.WriteLine($"{Constants.VERSION_FILE_NAME} created.");
+                }
                 else
                 {
-                    var installedVersion = new InstallationManager(Constants.InstallationDirectory).FindInstalledVersion(version);
-
-                    if(installedVersion != null)
-                    {
-                        await File.WriteAllTextAsync(Constants.VERSION_FILE_NAME, version).ConfigureAwait(false);
-                        Console.WriteLine($"{Constants.VERSION_FILE_NAME} created.");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Version {version} is not installed. Install it with 'install {version}'");
-                    }
-
+                    Console.WriteLine($"Version {version} is not installed. Install it with 'install {version}'");
                 }
             });
         }

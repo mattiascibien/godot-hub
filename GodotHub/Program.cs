@@ -21,4 +21,4 @@ var rootCommand = new RootCommand
 rootCommand.Description = "Godot installer and version manager";
 
 // Parse the incoming args and invoke the handler
-return await rootCommand.InvokeAsync(args);
+return await rootCommand.InvokeAsync(args).ConfigureAwait(false);

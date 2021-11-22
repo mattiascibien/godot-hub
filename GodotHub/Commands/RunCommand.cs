@@ -17,7 +17,7 @@ namespace GodotHub.Commands
             Option<string> versionOption = new Option<string>("--use-version", () => "", "The version to launch");
             versionOption.AddAlias("-u");
             Add(versionOption);
-            
+
             Add(new Argument<string[]>("cmdline", "The command line to pass to godot"));
 
             Handler = CommandHandler.Create<string?, string[]>(async (useVersion, cmdline) =>
