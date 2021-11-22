@@ -1,6 +1,8 @@
-﻿namespace GodotHub.Core
+﻿using Microsoft.Extensions.Configuration;
+
+namespace GodotHub.Core
 {
-    public class Constants
+    public class GodotHubPaths
     {
         public readonly string BaseDirectory;
 
@@ -10,11 +12,11 @@
 
         public const string VERSION_FILE_NAME = ".godot-version";
 
-        public Constants()
+        public GodotHubPaths(IConfiguration config)
         {
-            BaseDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".godot-hub");
-            InstallationDirectory = Path.Combine(BaseDirectory, "installations");
-            DownloadsDirectory = Path.Combine(BaseDirectory, "downloads");
+            BaseDirectory = config["godothub_root"];
+            InstallationDirectory = config["installation_directory"];
+            DownloadsDirectory = config["donwloads_directory"];
 
             if (!Directory.Exists(InstallationDirectory))
                 Directory.CreateDirectory(InstallationDirectory);

@@ -40,11 +40,11 @@ namespace GodotHub.Commands
             {
                 if (string.IsNullOrEmpty(UseVersion))
                 {
-                    var versionFile = Directory.EnumerateFiles(Directory.GetCurrentDirectory()).FirstOrDefault(f => Path.GetFileName(f) == Constants.VERSION_FILE_NAME);
+                    var versionFile = Directory.EnumerateFiles(Directory.GetCurrentDirectory()).FirstOrDefault(f => Path.GetFileName(f) == GodotHubPaths.VERSION_FILE_NAME);
                     if (versionFile != null)
                     {
                         UseVersion = (await File.ReadAllTextAsync(versionFile).ConfigureAwait(false)).Trim();
-                        Console.WriteLine($"Using version {UseVersion} from {Constants.VERSION_FILE_NAME}");
+                        Console.WriteLine($"Using version {UseVersion} from {GodotHubPaths.VERSION_FILE_NAME}");
                     }
                 }
                 if (UseVersion != null)

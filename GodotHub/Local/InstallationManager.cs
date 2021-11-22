@@ -8,7 +8,7 @@ namespace GodotHub.Local
     {
         public string InstallationPath { get; }
 
-        public InstallationManager(Constants constants)
+        public InstallationManager(GodotHubPaths constants)
         {
             InstallationPath = constants.InstallationDirectory;
         }

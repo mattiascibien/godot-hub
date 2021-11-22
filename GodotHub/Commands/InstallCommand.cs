@@ -29,7 +29,7 @@ namespace GodotHub.Commands
 
         public class CommandHandler : ICommandHandler
         {
-            private readonly Constants _constants;
+            private readonly GodotHubPaths _constants;
             private readonly InstallationManager _installationManager;
             private readonly IOnlineRepository _onlineRepository;
 
@@ -37,7 +37,7 @@ namespace GodotHub.Commands
             public bool Unstable { get; set; }
             public bool Mono { get; set; }
 
-            public CommandHandler(Constants constants, InstallationManager installationManager, IOnlineRepository onlineRepository)
+            public CommandHandler(GodotHubPaths constants, InstallationManager installationManager, IOnlineRepository onlineRepository)
             {
                 _constants = constants;
                 _installationManager = installationManager;

@@ -19,14 +19,14 @@ namespace GodotHub.Commands
 
         public class CommandHanlder : ICommandHandler
         {
-            private readonly Constants _constants;
+            private readonly GodotHubPaths _constants;
             private readonly ILinkCreator _linkCreator;
 
             public string CustomVersion { get; set; } = "";
 
             public string Path { get; set; } = "";
 
-            public CommandHanlder(Constants constants, ILinkCreator linkCreator)
+            public CommandHanlder(GodotHubPaths constants, ILinkCreator linkCreator)
             {
                 _constants = constants;
                 _linkCreator = linkCreator;
