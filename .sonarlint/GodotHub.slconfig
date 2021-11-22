@@ -1,0 +1,15 @@
+{
+  "ServerUri": "https://sonarcloud.io/",
+  "Organization": {
+    "Key": "mattiascibien-github",
+    "Name": "Mattias Cibien"
+  },
+  "ProjectKey": "mattiascibien_godot-hub",
+  "ProjectName": "godot-hub",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AWd6CK4SQrt00S5VFE1o",
+      "ProfileTimestamp": "2021-11-17T09:02:30Z"
+    }
+  }
+}

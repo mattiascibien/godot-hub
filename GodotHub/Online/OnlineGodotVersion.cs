@@ -15,13 +15,8 @@ namespace GodotHub.Online
 
         public IList<OnlineGodotPackage> Packages { get; } = new List<OnlineGodotPackage>();
 
-        // TODO: felt useful, might delete later
-        private readonly string _originalVersionString;
-
         public OnlineGodotVersion(string versionString)
         {
-            _originalVersionString = versionString;
-
             var versionSplit = versionString.Split("-", StringSplitOptions.RemoveEmptyEntries);
             Version = Version.Parse(versionSplit[0]);
             PostFix = versionSplit.Length <= 1 || versionSplit[1] == "stable" ? null : versionSplit[1];

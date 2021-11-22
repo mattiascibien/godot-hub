@@ -20,9 +20,7 @@ namespace GodotHub.Core
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = "ln",
-                    Arguments = $"\"{ Path.Combine(currentDirectory, linkName) }\"" +
-                        $" \"{ target }\"" +
-                        $" -s",
+                    Arguments = $"-s \"{ target }\" \"{ Path.Combine(currentDirectory, linkName) }\"",
                     UseShellExecute = true
                 });
             }
@@ -30,18 +28,19 @@ namespace GodotHub.Core
 
         public static void DeleteFolderLink(string currentDirectory, string folderLink)
         {
+            string path = Path.Combine(currentDirectory, folderLink);
             if (OperatingSystem.IsWindows())
-            {
+            {             
                 UACHelper.UACHelper.StartElevated(new ProcessStartInfo
                 {
                     FileName = "cmd.exe",
-                    Arguments = string.Format("/c del \"{0}\"", Path.Combine(currentDirectory, folderLink)),
+                    Arguments = string.Format("/c rmdir \"{0}\"", path),
                     UseShellExecute = true
                 });
             }
             else
             {
-                File.Delete(Path.Combine(currentDirectory, folderLink));
+                File.Delete(path);
             }
         }
 

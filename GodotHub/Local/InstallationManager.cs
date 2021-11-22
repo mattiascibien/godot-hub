@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using GodotHub.Core;
+using System.Diagnostics;
 using System.IO.Compression;
 
 namespace GodotHub.Local
@@ -41,7 +42,7 @@ namespace GodotHub.Local
                     destinationDirectory = Path.Combine(destinationDirectory, versionName);
                 }
 
-                archive.ExtractToDirectory(destinationDirectory);
+                archive.ExtractToDirectory(destinationDirectory, true);
 
                 if(isMono)
                 {
@@ -71,11 +72,12 @@ namespace GodotHub.Local
             var installedVersion = FindInstalledVersion(version);
             if(installedVersion != null)
             {
-                var editorPath = installedVersion.GetEditorPath();
+                (var osPlatform, var architecture) = CurrentOS.GetOsInfo();
+                var editorPaths = installedVersion.GetSupportedEditorExecutables(osPlatform, architecture);
 
-                if(editorPath != null)
+                if(editorPaths.Any())
                 {
-                    Process.Start(new ProcessStartInfo(editorPath, string.Join(" ", commandLine))
+                    Process.Start(new ProcessStartInfo(editorPaths.First().EditorPath, string.Join(" ", commandLine))
                     {
                         UseShellExecute = true
                     });

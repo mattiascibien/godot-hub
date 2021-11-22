@@ -1,6 +1,7 @@
 using GodotHub.Core;
 using GodotHub.Local;
 using GodotHub.Online;
+using ShellProgressBar;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.Runtime.InteropServices;
@@ -68,7 +69,7 @@ namespace GodotHub.Commands
                     return;
                 }
 
-                await DownloadAndExtract(installManager, version, mono, packageToDownload);
+                await DownloadAndExtract(installManager, version, mono, packageToDownload).ConfigureAwait(false);
 
                 Console.WriteLine($"Version {version} (mono = ({mono}) installed");
             });
@@ -78,7 +79,8 @@ namespace GodotHub.Commands
         {
             using var fileDonwloader = new FileDownloader(packageToDownload.DownloadUrl.ToString());
 
-            var outFile = await fileDonwloader.DownloadFileAsync(Constants.DownloadsDirectory).ConfigureAwait(false);
+            using var progressbar = new ProgressBar(10000, "Downloading");
+            var outFile = await fileDonwloader.DownloadFileAsync(Constants.DownloadsDirectory, progressbar.AsProgress<float>()).ConfigureAwait(false);
 
             await installManager.InstallPackageAsync(version, outFile, mono).ConfigureAwait(false);
         }

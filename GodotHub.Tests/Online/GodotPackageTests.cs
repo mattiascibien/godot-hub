@@ -1,3 +1,4 @@
+using GodotHub.Core;
 using GodotHub.Online;
 using System.Runtime.InteropServices;
 using Xunit;
@@ -16,7 +17,7 @@ namespace GodotHub.Tests.Online
             Assert.True(godotPackage.IsMono);
             Assert.Equal("Godot_v3.4-beta6_mono_win64.zip", godotPackage.FileName);
             Assert.Equal(Architecture.X64, godotPackage.Architecture);
-            Assert.Equal(PackageOperatingSystem.Windows, godotPackage.OperatingSystem);
+            Assert.Equal(GodotOperatingSystem.Windows, godotPackage.OperatingSystem);
         }
 
         [Fact]
@@ -29,7 +30,7 @@ namespace GodotHub.Tests.Online
             Assert.False(godotPackage.IsMono);
             Assert.Equal("Godot_v3.4-beta6_win64.exe.zip", godotPackage.FileName);
             Assert.Equal(Architecture.X64, godotPackage.Architecture);
-            Assert.Equal(PackageOperatingSystem.Windows, godotPackage.OperatingSystem);
+            Assert.Equal(GodotOperatingSystem.Windows, godotPackage.OperatingSystem);
         }
 
         [Fact]
@@ -42,7 +43,7 @@ namespace GodotHub.Tests.Online
             Assert.True(godotPackage.IsMono);
             Assert.Equal("Godot_v3.4-beta6_mono_x11_64.zip", godotPackage.FileName);
             Assert.Equal(Architecture.X64, godotPackage.Architecture);
-            Assert.Equal(PackageOperatingSystem.X11, godotPackage.OperatingSystem);
+            Assert.Equal(GodotOperatingSystem.X11, godotPackage.OperatingSystem);
         }
 
         [Fact]
@@ -55,7 +56,7 @@ namespace GodotHub.Tests.Online
             Assert.False(godotPackage.IsMono);
             Assert.Equal("Godot_v3.4-beta6_x11.64.zip", godotPackage.FileName);
             Assert.Equal(Architecture.X64, godotPackage.Architecture);
-            Assert.Equal(PackageOperatingSystem.X11, godotPackage.OperatingSystem);
+            Assert.Equal(GodotOperatingSystem.X11, godotPackage.OperatingSystem);
         }
 
         [Fact]
