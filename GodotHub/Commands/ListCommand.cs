@@ -12,48 +12,58 @@ namespace GodotHub.Commands
             var installedOption = new Option<bool>("--online", () => false, "List also the available Godot versions");
             installedOption.AddAlias("-o");
             Add(installedOption);
-
-            Handler = CommandHandler.Create<bool>((online) => ListVersions(online));
         }
 
-        private static async Task ListVersions(bool includeOnline)
+        public class CommandHandler : ICommandHandler
         {
-            await ListInstalledVersions().ConfigureAwait(false);
+            private readonly InstallationManager _installationManager;
 
-            if (includeOnline)
+            public CommandHandler(InstallationManager installationManager)
             {
-                Console.WriteLine("");
-                await ListOnlineVersions().ConfigureAwait(false);
+                _installationManager = installationManager;
             }
-        }
 
-        private static async Task ListInstalledVersions()
-        {
-            await Task.Run(() =>
+            public bool Online { get; set; }
+
+            public async Task<int> InvokeAsync(InvocationContext context)
             {
-                var installationsManager = new InstallationManager(Constants.InstallationDirectory);
+                await ListInstalledVersions().ConfigureAwait(false);
 
-                var installedVersions = installationsManager.GetInstalledVersions();
-
-                Console.WriteLine("Installed Godot Versions\n");
-                foreach (var item in installedVersions)
+                if (Online)
                 {
-                    if(item.IsExternal)
-                        Console.WriteLine($" - {item} (external)");
-                    else
-                        Console.WriteLine($" - {item}");
+                    Console.WriteLine("");
+                    await ListOnlineVersions().ConfigureAwait(false);
                 }
-            }).ConfigureAwait(false);
-        }
 
-        private static async Task ListOnlineVersions()
-        {
-            IOnlineRepository onlineRepository = new GithubVersionOnlineRepository();
+                return 0;
+            }
 
-            Console.WriteLine("Available Godot Versions\n");
-            await foreach (var item in onlineRepository.GetVersionsAsync())
+            private async Task ListInstalledVersions()
             {
-                Console.WriteLine($" - {item} (mono available = {item.HasMono})");
+                await Task.Run(() =>
+                {
+                    var installedVersions = _installationManager.GetInstalledVersions();
+
+                    Console.WriteLine("Installed Godot Versions\n");
+                    foreach (var item in installedVersions)
+                    {
+                        if (item.IsExternal)
+                            Console.WriteLine($" - {item} (external)");
+                        else
+                            Console.WriteLine($" - {item}");
+                    }
+                }).ConfigureAwait(false);
+            }
+
+            private static async Task ListOnlineVersions()
+            {
+                IOnlineRepository onlineRepository = new GithubVersionOnlineRepository();
+
+                Console.WriteLine("Available Godot Versions\n");
+                await foreach (var item in onlineRepository.GetVersionsAsync())
+                {
+                    Console.WriteLine($" - {item} (mono available = {item.HasMono})");
+                }
             }
         }
     }

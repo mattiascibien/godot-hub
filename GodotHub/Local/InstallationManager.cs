@@ -4,13 +4,13 @@ using System.IO.Compression;
 
 namespace GodotHub.Local
 {
-    internal class InstallationManager
+    public class InstallationManager
     {
         public string InstallationPath { get; }
 
-        public InstallationManager(string installationPath)
+        public InstallationManager(Constants constants)
         {
-            InstallationPath = installationPath;
+            InstallationPath = constants.InstallationDirectory;
         }
 
         public IEnumerable<LocalGodotVersion> GetInstalledVersions()

@@ -25,64 +25,80 @@ namespace GodotHub.Commands
             var monoOption = new Option<bool>("--mono", () => false, "Force a reinstall even if the version is already installed");
             monoOption.AddAlias("-m");
             Add(monoOption);
+        }
 
-            Handler = CommandHandler.Create<string, bool, bool, bool>(async (version, force, mono, unstable) =>
+        public class CommandHandler : ICommandHandler
+        {
+            private readonly Constants _constants;
+            private readonly InstallationManager _installationManager;
+
+            public string Version { get; set; }
+            public bool Unstable { get; set; }
+            public bool Mono { get; set; }
+
+            public CommandHandler(Constants constants, InstallationManager installationManager)
+            {
+                _constants = constants;
+                _installationManager = installationManager;
+            }
+
+            public async Task<int> InvokeAsync(InvocationContext context)
             {
                 IOnlineRepository onlineRepository = new GithubVersionOnlineRepository();
-                Console.WriteLine($"Checking availability of {version} (mono = {mono})");
-
-                var installManager = new InstallationManager(Constants.InstallationDirectory);
+                Console.WriteLine($"Checking availability of {Version} (mono = {Mono})");
 
                 // TODO: force
 
                 OnlineGodotVersion? versionToDownload = null;
 
-                if (version == "latest")
+                if (Version == "latest")
                 {
-                    versionToDownload = await onlineRepository.GetLatestVersionAsync(unstable).ConfigureAwait(false);
+                    versionToDownload = await onlineRepository.GetLatestVersionAsync(Unstable).ConfigureAwait(false);
 
-                    Console.WriteLine(string.Format("Latest {0} version is {1}", unstable ? "unstable" : "stable", versionToDownload));
+                    Console.WriteLine(string.Format("Latest {0} version is {1}", Unstable ? "unstable" : "stable", versionToDownload));
                 }
                 else
                 {
-                    versionToDownload = await onlineRepository.GetVersionAsync(version).ConfigureAwait(false);
+                    versionToDownload = await onlineRepository.GetVersionAsync(Version).ConfigureAwait(false);
                 }
 
                 if (versionToDownload == null)
                 {
-                    Console.WriteLine($"Version {version} was not found on the repository");
-                    return;
+                    Console.WriteLine($"Version {Version} was not found on the repository");
+                    return 1;
                 }
 
-                if (mono && !versionToDownload.HasMono)
+                if (Mono && !versionToDownload.HasMono)
                 {
-                    Console.WriteLine($"Version {version} does not have a package with mono");
-                    return;
+                    Console.WriteLine($"Version {Version} does not have a package with mono");
+                    return 1;
                 }
 
                 (var osPlatform, var architecture) = CurrentOS.GetOsInfo();
-                var packageToDownload = versionToDownload.GetPackageForSystem(osPlatform, architecture, mono);
+                var packageToDownload = versionToDownload.GetPackageForSystem(osPlatform, architecture, Mono);
 
                 if (packageToDownload == null)
                 {
                     Console.WriteLine($"Cannot find a package for {osPlatform}-{architecture}");
-                    return;
+                    return 1;
                 }
 
-                await DownloadAndExtract(installManager, version, mono, packageToDownload).ConfigureAwait(false);
+                await DownloadAndExtract(packageToDownload).ConfigureAwait(false);
 
-                Console.WriteLine($"Version {version} (mono = ({mono}) installed");
-            });
-        }
+                Console.WriteLine($"Version {Version} (mono = ({Mono}) installed");
+                return 0;
+            }
 
-        private static async Task DownloadAndExtract(InstallationManager installManager, string version, bool mono, OnlineGodotPackage packageToDownload)
-        {
-            using var fileDonwloader = new FileDownloader(packageToDownload.DownloadUrl.ToString());
 
-            using var progressbar = new ProgressBar(10000, "Downloading");
-            var outFile = await fileDonwloader.DownloadFileAsync(Constants.DownloadsDirectory, progressbar.AsProgress<float>()).ConfigureAwait(false);
+            private async Task DownloadAndExtract(OnlineGodotPackage packageToDownload)
+            {
+                using var fileDonwloader = new FileDownloader(packageToDownload.DownloadUrl.ToString());
 
-            await installManager.InstallPackageAsync(version, outFile, mono).ConfigureAwait(false);
+                using var progressbar = new ProgressBar(10000, "Downloading");
+                var outFile = await fileDonwloader.DownloadFileAsync(_constants.DownloadsDirectory, progressbar.AsProgress<float>()).ConfigureAwait(false);
+
+                await _installationManager.InstallPackageAsync(Version, outFile, Mono).ConfigureAwait(false);
+            }
         }
     }
 }

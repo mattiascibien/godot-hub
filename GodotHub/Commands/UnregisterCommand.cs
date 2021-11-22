@@ -1,11 +1,6 @@
 ﻿using GodotHub.Core;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GodotHub.Commands
 {
@@ -13,20 +8,33 @@ namespace GodotHub.Commands
     {
         public UnregisterCommand() : base("unregister", "unregisters an external godot installation")
         {
-            Add(new Argument<string>("customversion", "the custom version to unregister (i.e. X.Y-dev"));
+            Add(new Argument<string>("customversion", "the custom version to unregister (i.e. X.Y-dev"));      
+        }
 
-            Handler = CommandHandler.Create<string>((customversion) =>
+        public class CommandHandler : ICommandHandler
+        {
+            private readonly Constants _constants;
+
+            public string CustomVersion { get; set; }
+
+            public CommandHandler(Constants constants)
             {
-                if(LinkCreator.IsLink(Path.Combine(Constants.InstallationDirectory, customversion)))
+                _constants = constants;
+            }
+
+            public Task<int> InvokeAsync(InvocationContext context)
+            {
+                if (LinkCreator.IsLink(Path.Combine(_constants.InstallationDirectory, CustomVersion)))
                 {
-                    LinkCreator.DeleteFolderLink(Constants.InstallationDirectory, customversion);
-                    Console.WriteLine($"Unregistered {customversion}");
+                    LinkCreator.DeleteFolderLink(_constants.InstallationDirectory, CustomVersion);
+                    Console.WriteLine($"Unregistered {CustomVersion}");
                 }
                 else
                 {
-                    Console.WriteLine($"Version {customversion} does not correspond to an external version");
+                    Console.WriteLine($"Version {CustomVersion} does not correspond to an external version");
                 }
-            });
+                return Task.FromResult(0);
+            }
         }
     }
 }

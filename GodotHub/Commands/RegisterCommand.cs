@@ -15,12 +15,27 @@ namespace GodotHub.Commands
         {
             Add(new Argument<string>("customversion", "the custom version to use (i.e. X.Y-dev"));
             Add(new Argument<string>("path", "the path to the godot installation"));
+        }
 
-            Handler = CommandHandler.Create<string, string>((customversion, path) =>
+        public class CommandHanlder : ICommandHandler
+        {
+            private readonly Constants _constants;
+
+            public string CustomVersion { get; set; }
+
+            public string Path { get; set; }
+
+            public CommandHanlder(Constants constants)
             {
-                LinkCreator.CreateFolderLink(Constants.InstallationDirectory, customversion, path);
-                Console.WriteLine($"Registered {path} as {customversion}");
-            });
+                _constants = constants;
+            }
+
+            public Task<int> InvokeAsync(InvocationContext context)
+            {
+                LinkCreator.CreateFolderLink(_constants.InstallationDirectory, CustomVersion, Path);
+                Console.WriteLine($"Registered {Path} as {CustomVersion}");
+                return Task.FromResult(0);
+            }
         }
     }
 }
