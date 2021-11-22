@@ -1,7 +1,9 @@
-﻿using GodotHub.Commands;
+﻿using ConfigurationSubstitution;
+using GodotHub.Commands;
 using GodotHub.Core;
 using GodotHub.Local;
 using GodotHub.Online;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -24,6 +26,13 @@ namespace GodotHub
             .UseHost(_ => Host.CreateDefaultBuilder(),
                 host =>
                 {
+                    host.ConfigureAppConfiguration(builder =>
+                    {
+                        builder.AddEnvironmentVariables("GODOTHUB_");
+                        builder.AddJsonFile("godot-hub-config.json"); // this is relative to the current directory
+                        builder.EnableSubstitutions(exceptionOnMissingVariables: true);
+                    });
+
                     host.ConfigureServices(services =>
                     {
                         services.AddSingleton<Constants>();
