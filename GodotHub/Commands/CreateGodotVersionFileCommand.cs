@@ -21,7 +21,7 @@ namespace GodotHub.Commands
         {
             private readonly InstallationManager _installationManager;
 
-            public string Version { get; set; }
+            public string Version { get; set; } = "";
 
             public CommandHandler(InstallationManager installationManager)
             {

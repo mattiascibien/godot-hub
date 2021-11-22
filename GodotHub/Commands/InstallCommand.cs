@@ -33,7 +33,7 @@ namespace GodotHub.Commands
             private readonly InstallationManager _installationManager;
             private readonly IOnlineRepository _onlineRepository;
 
-            public string Version { get; set; }
+            public string Version { get; set; } = "";
             public bool Unstable { get; set; }
             public bool Mono { get; set; }
 
