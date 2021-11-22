@@ -4,8 +4,6 @@ namespace GodotHub.Core
 {
     public class GodotHubPaths
     {
-        public readonly string BaseDirectory;
-
         public readonly string InstallationDirectory;
 
         public readonly string DownloadsDirectory;
@@ -14,12 +12,14 @@ namespace GodotHub.Core
 
         public GodotHubPaths(IConfiguration config)
         {
-            BaseDirectory = config["godothub_root"];
             InstallationDirectory = config["installation_directory"];
             DownloadsDirectory = config["donwloads_directory"];
 
             if (!Directory.Exists(InstallationDirectory))
                 Directory.CreateDirectory(InstallationDirectory);
+
+            if (!Directory.Exists(DownloadsDirectory))
+                Directory.CreateDirectory(DownloadsDirectory);
         }
     }
 }
