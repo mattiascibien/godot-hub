@@ -2,9 +2,9 @@
 
 namespace GodotHub.Core
 {
-    public static class LinkCreator
+    public class LinkCreator : ILinkCreator
     {
-        public static void CreateFolderLink(string currentDirectory, string linkName, string target)
+        public void CreateFolderLink(string currentDirectory, string linkName, string target)
         {
             if(OperatingSystem.IsWindows())
             {
@@ -26,7 +26,7 @@ namespace GodotHub.Core
             }
         }
 
-        public static void DeleteFolderLink(string currentDirectory, string folderLink)
+        public void DeleteFolderLink(string currentDirectory, string folderLink)
         {
             string path = Path.Combine(currentDirectory, folderLink);
             if (OperatingSystem.IsWindows())
@@ -42,12 +42,6 @@ namespace GodotHub.Core
             {
                 File.Delete(path);
             }
-        }
-
-        public static bool IsLink(string path)
-        {
-            DirectoryInfo pathInfo = new DirectoryInfo(path);
-            return (pathInfo.Attributes & FileAttributes.ReparsePoint) != 0;
         }
     }
 }

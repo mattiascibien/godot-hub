@@ -29,6 +29,7 @@ namespace GodotHub
                         services.AddSingleton<Constants>();
                         services.AddTransient<InstallationManager>();
                         services.AddTransient<IOnlineRepository, GithubOnlineRepository>();
+                        services.AddSingleton<ILinkCreator, LinkCreator>();
                     });
                     host.UseCommandHandler<RunCommand, RunCommand.CommandHandler>();
                     host.UseCommandHandler<ListCommand, ListCommand.CommandHandler>();

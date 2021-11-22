@@ -20,19 +20,21 @@ namespace GodotHub.Commands
         public class CommandHanlder : ICommandHandler
         {
             private readonly Constants _constants;
+            private readonly ILinkCreator _linkCreator;
 
             public string CustomVersion { get; set; }
 
             public string Path { get; set; }
 
-            public CommandHanlder(Constants constants)
+            public CommandHanlder(Constants constants, ILinkCreator linkCreator)
             {
                 _constants = constants;
+                _linkCreator = linkCreator;
             }
 
             public Task<int> InvokeAsync(InvocationContext context)
             {
-                LinkCreator.CreateFolderLink(_constants.InstallationDirectory, CustomVersion, Path);
+                _linkCreator.CreateFolderLink(_constants.InstallationDirectory, CustomVersion, Path);
                 Console.WriteLine($"Registered {Path} as {CustomVersion}");
                 return Task.FromResult(0);
             }

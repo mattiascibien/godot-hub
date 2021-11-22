@@ -14,19 +14,21 @@ namespace GodotHub.Commands
         public class CommandHandler : ICommandHandler
         {
             private readonly Constants _constants;
+            private readonly ILinkCreator _linkCreator;
 
             public string CustomVersion { get; set; }
 
-            public CommandHandler(Constants constants)
+            public CommandHandler(Constants constants, ILinkCreator linkCreator)
             {
                 _constants = constants;
+                _linkCreator = linkCreator;
             }
 
             public Task<int> InvokeAsync(InvocationContext context)
             {
-                if (LinkCreator.IsLink(Path.Combine(_constants.InstallationDirectory, CustomVersion)))
+                if (LinkUtils.IsLink(Path.Combine(_constants.InstallationDirectory, CustomVersion)))
                 {
-                    LinkCreator.DeleteFolderLink(_constants.InstallationDirectory, CustomVersion);
+                    _linkCreator.DeleteFolderLink(_constants.InstallationDirectory, CustomVersion);
                     Console.WriteLine($"Unregistered {CustomVersion}");
                 }
                 else

@@ -26,7 +26,7 @@ namespace GodotHub.Local
             Version = Version.Parse(versionString[0]);
             PostFix = versionString.Length <= 1 || versionString[1] == "mono" ? null : versionString[1];
             IsStable = string.IsNullOrEmpty(PostFix);
-            IsExternal = LinkCreator.IsLink(InstallationPath);
+            IsExternal = LinkUtils.IsLink(InstallationPath);
         }
 
         public IEnumerable<EditorExecutable> GetSupportedEditorExecutables(OSPlatform osPlatform, Architecture architecture)
