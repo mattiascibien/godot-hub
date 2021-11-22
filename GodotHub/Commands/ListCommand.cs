@@ -13,17 +13,30 @@ namespace GodotHub.Commands
             installedOption.AddAlias("-o");
             Add(installedOption);
 
-            Handler = CommandHandler.Create<bool>((online) => ListVersions(online));
+            var fromGithubOption = new Option<bool>("--github", () => true, "Search from github");
+            Add(fromGithubOption);
+
+            var fromTuxfamilyOption = new Option<bool>("--tuxfamily", () => false, "Search from tuxfamily");
+            Add(fromTuxfamilyOption);
+
+            Handler = CommandHandler.Create<bool, bool, bool>((online, tuxfamily, github) => ListVersions(online, tuxfamily, github));
         }
 
-        private static async Task ListVersions(bool includeOnline)
+        private static async Task ListVersions(bool includeOnline, bool tuxfamily, bool github)
         {
             await ListInstalledVersions().ConfigureAwait(false);
 
             if (includeOnline)
             {
                 Console.WriteLine("");
-                await ListOnlineVersions().ConfigureAwait(false);
+
+                if(tuxfamily)
+                    await ListOnlineVersions(new TuxFamilyOnlineRepository()).ConfigureAwait(false);
+
+                Console.WriteLine("");
+
+                if (github)
+                    await ListOnlineVersions(new GithubVersionOnlineRepository()).ConfigureAwait(false);
             }
         }
 
@@ -46,11 +59,10 @@ namespace GodotHub.Commands
             }).ConfigureAwait(false);
         }
 
-        private static async Task ListOnlineVersions()
+        private static async Task ListOnlineVersions(IOnlineRepository onlineRepository)
         {
-            IOnlineRepository onlineRepository = new GithubVersionOnlineRepository();
-
-            Console.WriteLine("Available Godot Versions\n");
+            // TODO: do not use reflection
+            Console.WriteLine($"Available Godot Versions from {onlineRepository.GetType().Name}\n");
             await foreach (var item in onlineRepository.GetVersionsAsync())
             {
                 Console.WriteLine($" - {item} (mono available = {item.HasMono})");
