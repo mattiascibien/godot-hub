@@ -16,10 +16,12 @@ namespace GodotHub.Commands
 
         public class CommandHandler : ICommandHandler
         {
+            private readonly IOnlineRepository _onlineRepository;
             private readonly InstallationManager _installationManager;
 
-            public CommandHandler(InstallationManager installationManager)
+            public CommandHandler(InstallationManager installationManager, IOnlineRepository onlineRepository)
             {
+                _onlineRepository = onlineRepository;
                 _installationManager = installationManager;
             }
 
@@ -55,12 +57,11 @@ namespace GodotHub.Commands
                 }).ConfigureAwait(false);
             }
 
-            private static async Task ListOnlineVersions()
+            private async Task ListOnlineVersions()
             {
-                IOnlineRepository onlineRepository = new GithubVersionOnlineRepository();
 
                 Console.WriteLine("Available Godot Versions\n");
-                await foreach (var item in onlineRepository.GetVersionsAsync())
+                await foreach (var item in _onlineRepository.GetVersionsAsync())
                 {
                     Console.WriteLine($" - {item} (mono available = {item.HasMono})");
                 }

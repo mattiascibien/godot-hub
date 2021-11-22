@@ -2,7 +2,7 @@ using Octokit;
 
 namespace GodotHub.Online
 {
-    public class GithubVersionOnlineRepository : IOnlineRepository
+    public class GithubOnlineRepository : IOnlineRepository
     {
         private static readonly string[] Exclusions = new[]
         {
@@ -17,7 +17,7 @@ namespace GodotHub.Online
 
         private readonly GitHubClient _githubClient;
 
-        public GithubVersionOnlineRepository()
+        public GithubOnlineRepository()
         {
             _githubClient = new GitHubClient(new ProductHeaderValue("GodotHub"));
         }

@@ -1,6 +1,7 @@
 ﻿using GodotHub.Commands;
 using GodotHub.Core;
 using GodotHub.Local;
+using GodotHub.Online;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -27,6 +28,7 @@ namespace GodotHub
                     {
                         services.AddSingleton<Constants>();
                         services.AddTransient<InstallationManager>();
+                        services.AddTransient<IOnlineRepository, GithubOnlineRepository>();
                     });
                     host.UseCommandHandler<RunCommand, RunCommand.CommandHandler>();
                     host.UseCommandHandler<ListCommand, ListCommand.CommandHandler>();
