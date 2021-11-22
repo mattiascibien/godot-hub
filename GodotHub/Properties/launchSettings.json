@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "GodotHub": {
-      "commandName": "Project",
-      "commandLineArgs": "run",
-      "workingDirectory": "C:\\src\\MeshViewer"
-    }
-  }
-}
