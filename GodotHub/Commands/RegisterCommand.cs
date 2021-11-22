@@ -22,9 +22,9 @@ namespace GodotHub.Commands
             private readonly Constants _constants;
             private readonly ILinkCreator _linkCreator;
 
-            public string CustomVersion { get; set; }
+            public string CustomVersion { get; set; } = "";
 
-            public string Path { get; set; }
+            public string Path { get; set; } = "";
 
             public CommandHanlder(Constants constants, ILinkCreator linkCreator)
             {

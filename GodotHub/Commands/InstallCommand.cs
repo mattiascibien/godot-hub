@@ -48,10 +48,7 @@ namespace GodotHub.Commands
             {
                 Console.WriteLine($"Checking availability of {Version} (mono = {Mono})");
 
-                // TODO: force
-
-                OnlineGodotVersion? versionToDownload = null;
-
+                OnlineGodotVersion? versionToDownload;
                 if (Version == "latest")
                 {
                     versionToDownload = await _onlineRepository.GetLatestVersionAsync(Unstable).ConfigureAwait(false);
@@ -89,7 +86,6 @@ namespace GodotHub.Commands
                 Console.WriteLine($"Version {Version} (mono = ({Mono}) installed");
                 return 0;
             }
-
 
             private async Task DownloadAndExtract(OnlineGodotPackage packageToDownload)
             {

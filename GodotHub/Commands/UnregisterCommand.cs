@@ -8,7 +8,7 @@ namespace GodotHub.Commands
     {
         public UnregisterCommand() : base("unregister", "unregisters an external godot installation")
         {
-            Add(new Argument<string>("customversion", "the custom version to unregister (i.e. X.Y-dev"));      
+            Add(new Argument<string>("customversion", "the custom version to unregister (i.e. X.Y-dev"));
         }
 
         public class CommandHandler : ICommandHandler
@@ -16,7 +16,7 @@ namespace GodotHub.Commands
             private readonly Constants _constants;
             private readonly ILinkCreator _linkCreator;
 
-            public string CustomVersion { get; set; }
+            public string CustomVersion { get; set; } = "";
 
             public CommandHandler(Constants constants, ILinkCreator linkCreator)
             {

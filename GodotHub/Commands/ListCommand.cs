@@ -59,7 +59,6 @@ namespace GodotHub.Commands
 
             private async Task ListOnlineVersions()
             {
-
                 Console.WriteLine("Available Godot Versions\n");
                 await foreach (var item in _onlineRepository.GetVersionsAsync())
                 {
