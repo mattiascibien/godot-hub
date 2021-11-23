@@ -8,7 +8,9 @@ namespace GodotHub.Core
 
         public readonly string DownloadsDirectory;
 
-        public const string VERSION_FILE_NAME = ".godot-version";
+        public const string VersionFileName = ".godot-version";
+
+        public const string LocalConfigFilename = "godot-hub.json";
 
         public GodotHubPaths(IConfiguration config)
         {

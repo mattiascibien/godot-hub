@@ -43,7 +43,7 @@ namespace GodotHub
                         builder.AddInMemoryCollection(defaults);
 
                         builder.AddEnvironmentVariables("GODOTHUB_");
-                        builder.AddJsonFile("godot-hub-config.json", true); // this is relative to the current directory
+                        builder.AddJsonFile(GodotHubPaths.LocalConfigFilename, true); // this is relative to the current directory
                         builder.EnableSubstitutions(exceptionOnMissingVariables: true);
                     });
 
@@ -58,8 +58,7 @@ namespace GodotHub
                     host.UseCommandHandler<ListCommand, ListCommand.CommandHandler>();
                     host.UseCommandHandler<InstallCommand, InstallCommand.CommandHandler>();
                     host.UseCommandHandler<UninstallCommand, UninstallCommand.CommandHandler>();
-
-                    host.UseCommandHandler<CreateGodotVersionFileCommand, CreateGodotVersionFileCommand.CommandHandler>();
+                    host.UseCommandHandler<CreateLocalGodotHubConfigurationCommand, CreateLocalGodotHubConfigurationCommand.CommandHandler>();
                     host.UseCommandHandler<RegisterCommand, RegisterCommand.CommandHanlder>();
                     host.UseCommandHandler<UnregisterCommand, UnregisterCommand.CommandHandler>();
                 })
@@ -77,7 +76,7 @@ namespace GodotHub
                 new ListCommand(),
                 new InstallCommand(),
                 new UninstallCommand(),
-                new CreateGodotVersionFileCommand(),
+                new CreateLocalGodotHubConfigurationCommand(),
                 new RegisterCommand(),
                 new UnregisterCommand(),
             };
