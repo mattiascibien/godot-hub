@@ -43,7 +43,7 @@ namespace GodotHub
                         builder.AddInMemoryCollection(defaults);
 
                         builder.AddEnvironmentVariables("GODOTHUB_");
-                        builder.AddJsonFile(GodotHubPaths.LocalConfigFilename, true); // this is relative to the current directory
+                        builder.AddJsonFile(GodotHubPaths.LocalConfigFilename, optional: true, reloadOnChange: true); // this is relative to the current directory
                         builder.EnableSubstitutions(exceptionOnMissingVariables: true);
                     });
 

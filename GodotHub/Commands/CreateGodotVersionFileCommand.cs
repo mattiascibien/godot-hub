@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace GodotHub.Commands
 {
+    [Obsolete($"The command is not valid. Use the new {nameof(CreateLocalGodotHubConfigurationCommand)}")]
     public class CreateGodotVersionFileCommand : Command
     {
         public CreateGodotVersionFileCommand() : base("create-godot-version", $"creates the {GodotHubPaths.VersionFileName} containing the version to use")

@@ -1,5 +1,6 @@
 ﻿using GodotHub.Core;
 using GodotHub.Local;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
@@ -25,32 +26,30 @@ namespace GodotHub.Commands
 
         public class CommandHandler : ICommandHandler
         {
+            private readonly IConfiguration _configuration;
             private readonly InstallationManager _installationManager;
 
             public string? UseVersion { get; set; }
 
             public string[] CmdLine { get; set; } = Array.Empty<string>();
 
-            public CommandHandler(InstallationManager installationManager)
+            public CommandHandler(InstallationManager installationManager, IConfiguration configuration)
             {
+                _configuration = configuration;
                 _installationManager = installationManager;
             }
 
-            public async Task<int> InvokeAsync(InvocationContext context)
+            public Task<int> InvokeAsync(InvocationContext context)
             {
                 if (string.IsNullOrEmpty(UseVersion))
                 {
-                    var versionFile = Directory.EnumerateFiles(Directory.GetCurrentDirectory()).FirstOrDefault(f => Path.GetFileName(f) == GodotHubPaths.VersionFileName);
-                    if (versionFile != null)
-                    {
-                        UseVersion = (await File.ReadAllTextAsync(versionFile).ConfigureAwait(false)).Trim();
-                        Console.WriteLine($"Using version {UseVersion} from {GodotHubPaths.VersionFileName}");
-                    }
+                    UseVersion = _configuration["version"];
                 }
+
                 if (UseVersion != null)
                     _installationManager.Launch(UseVersion, CmdLine);
 
-                return 0;
+                return Task.FromResult(0);
             }
         }
     }

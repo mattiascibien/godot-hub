@@ -15,6 +15,9 @@ namespace GodotHub.Commands
         public CreateLocalGodotHubConfigurationCommand() : base("create-local-config", "Creates a local config for the folder")
         {
             AddOption(new Option<bool>("--migrate", "Migrates the old .godot-version file"));
+            var useVersionOption = new Option<string?>("--use-version", "Specifies the version to use in our local config");
+            useVersionOption.AddAlias("-u");
+            AddOption(useVersionOption);
         }
 
         public class CommandHandler : ICommandHandler
@@ -26,6 +29,8 @@ namespace GodotHub.Commands
                 Indented = true
             };
 
+            public string? UseVersion {  get; set; }
+
             public bool Migrate { get; set; }
 
             public CommandHandler(IConfiguration configuration)
@@ -35,8 +40,8 @@ namespace GodotHub.Commands
 
             public async Task<int> InvokeAsync(InvocationContext context)
             {
-                string? currentVersion = null;
-                if(Migrate && File.Exists(GodotHubPaths.VersionFileName))
+                string? currentVersion = UseVersion;
+                if(currentVersion == null && Migrate && File.Exists(GodotHubPaths.VersionFileName))
                 {
                     currentVersion = await File.ReadAllTextAsync(GodotHubPaths.VersionFileName).ConfigureAwait(false);
                 }
@@ -53,6 +58,10 @@ namespace GodotHub.Commands
 
                 foreach (var (key, value) in _configuration.AsEnumerable())
                 {
+                    // SKIP environment variables
+                    if(Environment.GetEnvironmentVariable(key) != null || key == "contentRoot")
+                        continue;
+
                     writer.WriteString(key, value);
                 }
 
