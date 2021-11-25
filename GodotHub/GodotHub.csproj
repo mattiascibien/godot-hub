@@ -18,6 +18,7 @@
     <PackageTags>godot, gamedev, dotnet-tool</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <CodeAnalysisRuleSet>..\.sonarlint\mattiascibien_godot-hubcsharp.ruleset</CodeAnalysisRuleSet>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
