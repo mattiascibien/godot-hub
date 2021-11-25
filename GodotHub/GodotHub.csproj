@@ -9,9 +9,6 @@
     <Nullable>enable</Nullable>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>godot-hub</ToolCommandName>
-    <PublishTrimmed>true</PublishTrimmed>
-    <PublishReadyToRun>true</PublishReadyToRun>
-    <PublishSingleFile>true</PublishSingleFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Description>CLI tool that can manage multiple installed version of Godot Engine (https://godotengine.org/)</Description>
     <Copyright>Copyright (c) 2021 Mattias Cibien</Copyright>

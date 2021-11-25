@@ -51,7 +51,7 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Publish
-        run: dotnet publish ./GodotHub/GodotHub.csproj -c Release -r ${{ matrix.runtime }} --self-contained
+        run: dotnet publish ./GodotHub/GodotHub.csproj -c Release -r ${{ matrix.runtime }} --self-contained -p:PublishReadyToRun=true -p:PublishSingleFile=true -p:PublishTrimmed=true
       - name: Zip all
         run: |
           if [ "${{ matrix.runtime }}" == "win-x64" ]; then
@@ -90,7 +90,7 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Pack
-        run: dotnet pack ./GodotHub/GodotHub.csproj -c Release /p:PublishSingleFile=false /p:PublishTrimmed=false /p:PublishReadyToRun=false
+        run: dotnet pack ./GodotHub/GodotHub.csproj -c Release
       - name: Archive nupkg artifacts
         uses: actions/upload-artifact@v2
         with:
