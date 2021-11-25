@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GodotHub.Commands
+namespace GodotHub.Commands.Deprecated
 {
-    [Obsolete($"The command is not valid. Use the new {nameof(CreateLocalGodotHubConfigurationCommand)}")]
+    [Obsolete($"The command is not valid. Use the new {nameof(CreateLocalConfigurationCommand)}")]
     public class CreateGodotVersionFileCommand : Command
     {
         public CreateGodotVersionFileCommand() : base("create-godot-version", $"creates the {GodotHubPaths.VersionFileName} containing the version to use")

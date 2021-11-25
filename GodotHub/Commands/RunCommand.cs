@@ -46,10 +46,18 @@ namespace GodotHub.Commands
                     UseVersion = _configuration["version"];
                 }
 
+                int returnValue;
                 if (UseVersion != null)
-                    _installationManager.Launch(UseVersion, CmdLine);
+                {
+                    returnValue = _installationManager.Launch(UseVersion, CmdLine);
+                }
+                else
+                {
+                    Console.WriteLine("Cannot find a version to run. Specify it with -u <version> parameter");
+                    returnValue = 1;
+                }
 
-                return Task.FromResult(0);
+                return Task.FromResult(returnValue);
             }
         }
     }

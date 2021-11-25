@@ -66,7 +66,7 @@ namespace GodotHub
                     host.UseCommandHandler<ListCommand, ListCommand.CommandHandler>();
                     host.UseCommandHandler<InstallCommand, InstallCommand.CommandHandler>();
                     host.UseCommandHandler<UninstallCommand, UninstallCommand.CommandHandler>();
-                    host.UseCommandHandler<CreateLocalGodotHubConfigurationCommand, CreateLocalGodotHubConfigurationCommand.CommandHandler>();
+                    host.UseCommandHandler<CreateLocalConfigurationCommand, CreateLocalConfigurationCommand.CommandHandler>();
                     host.UseCommandHandler<RegisterCommand, RegisterCommand.CommandHanlder>();
                     host.UseCommandHandler<UnregisterCommand, UnregisterCommand.CommandHandler>();
                 })
@@ -84,7 +84,7 @@ namespace GodotHub
                 new ListCommand(),
                 new InstallCommand(),
                 new UninstallCommand(),
-                new CreateLocalGodotHubConfigurationCommand(),
+                new CreateLocalConfigurationCommand(),
                 new RegisterCommand(),
                 new UnregisterCommand(),
             };

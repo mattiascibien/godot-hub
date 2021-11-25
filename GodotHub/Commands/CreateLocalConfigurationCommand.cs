@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace GodotHub.Commands
 {
-    public class CreateLocalGodotHubConfigurationCommand : Command
+    public class CreateLocalConfigurationCommand : Command
     {
-        public CreateLocalGodotHubConfigurationCommand() : base("create-local-config", "Creates a local config for the folder")
+        public CreateLocalConfigurationCommand() : base("create-local-config", "Creates a local config for the folder")
         {
             AddOption(new Option<bool>("--migrate", "Migrates the old .godot-version file"));
             var useVersionOption = new Option<string?>("--use-version", "Specifies the version to use in our local config");

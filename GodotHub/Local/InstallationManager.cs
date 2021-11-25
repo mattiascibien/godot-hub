@@ -66,7 +66,7 @@ namespace GodotHub.Local
             }).ConfigureAwait(false);
         }
 
-        public void Launch(string version, string[] commandLine)
+        public int Launch(string version, string[] commandLine)
         {
             var installedVersion = FindInstalledVersion(version);
             if(installedVersion != null)
@@ -78,13 +78,19 @@ namespace GodotHub.Local
                 {
                     Process.Start(new ProcessStartInfo(editorPaths.First().EditorPath, string.Join(" ", commandLine))
                     {
-                        UseShellExecute = true
+                        //UseShellExecute = true
                     });
+
+                    return 0;
                 }
+
+                Console.WriteLine($"Version {version} does not seem to have a viable editor");
+                return 1;
             }
             else
             {
-                Console.WriteLine($"Version {version} is not installed. Install it with 'install {version}'");
+                Console.WriteLine($"Version {version} is not installed.");
+                return 1;
             }
         }
     }
