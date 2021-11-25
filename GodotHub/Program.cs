@@ -52,7 +52,15 @@ namespace GodotHub
                         services.AddSingleton<GodotHubPaths>();
                         services.AddTransient<InstallationManager>();
                         services.AddTransient<IOnlineRepository, GithubOnlineRepository>();
-                        services.AddSingleton<ILinkCreator, LinkCreator>();
+
+                        if(OperatingSystem.IsWindows())
+                        {
+                            services.AddSingleton<ILinkCreator, Core.Windows.LinkCreatorWindows>();
+                        }
+                        else
+                        {
+                            services.AddSingleton<ILinkCreator, Core.Unix.LinkCreatorUnix>();
+                        }
                     });
                     host.UseCommandHandler<RunCommand, RunCommand.CommandHandler>();
                     host.UseCommandHandler<ListCommand, ListCommand.CommandHandler>();
