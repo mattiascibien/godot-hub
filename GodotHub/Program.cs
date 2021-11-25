@@ -6,15 +6,10 @@ using GodotHub.Online;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
 using System.CommandLine.Parsing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GodotHub
 {
@@ -53,7 +48,7 @@ namespace GodotHub
                         services.AddTransient<InstallationManager>();
                         services.AddTransient<IOnlineRepository, GithubOnlineRepository>();
 
-                        if(OperatingSystem.IsWindows())
+                        if (OperatingSystem.IsWindows())
                         {
                             services.AddSingleton<ILinkCreator, Core.Windows.LinkCreatorWindows>();
                         }

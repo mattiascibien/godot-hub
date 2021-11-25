@@ -11,7 +11,7 @@ namespace GodotHub.Online
 
         public Uri DownloadUrl { get; }
 
-        public GodotOperatingSystem OperatingSystem {  get; }
+        public GodotOperatingSystem OperatingSystem { get; }
 
         public Architecture Architecture { get; }
 

@@ -16,9 +16,9 @@ namespace GodotHub.Local
 
         public Architecture Architecture { get; }
 
-        public bool IsMono { get;}
+        public bool IsMono { get; }
 
-        public string EditorPath { get;}
+        public string EditorPath { get; }
 
         public int Priority { get; }
 
@@ -37,7 +37,7 @@ namespace GodotHub.Local
             }
             else
             {
-                if(fileName.Contains("headless"))
+                if (fileName.Contains("headless"))
                     OperatingSystem = GodotOperatingSystem.LinuxHeadless;
                 else if (fileName.Contains("server"))
                     OperatingSystem = GodotOperatingSystem.LinuxServer;
@@ -57,7 +57,7 @@ namespace GodotHub.Local
 
         public static bool IsEditorExecutable(string path)
         {
-            if(System.OperatingSystem.IsWindows())
+            if (System.OperatingSystem.IsWindows())
                 return IsEditorExecutableWindows(path);
             else
                 return IsEditorExecutableUnix(path);

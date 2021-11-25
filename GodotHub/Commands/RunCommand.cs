@@ -1,15 +1,7 @@
-﻿using GodotHub.Core;
-using GodotHub.Local;
+﻿using GodotHub.Local;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.CommandLine.Parsing;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GodotHub.Commands
 {

@@ -16,7 +16,7 @@ namespace GodotHub.Local
 
         public string InstallationPath { get; }
 
-        public bool IsExternal { get;}
+        public bool IsExternal { get; }
 
         public LocalGodotVersion(string path, bool isExternal)
         {

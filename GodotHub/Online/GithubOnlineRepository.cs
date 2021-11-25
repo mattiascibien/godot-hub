@@ -67,14 +67,14 @@ namespace GodotHub.Online
             var releases = await _githubClient.Repository.Release.GetAll(OWNER, REPO).ConfigureAwait(false);
 
             // if this is a stable version, append stable
-            if(!code.Contains('-'))
+            if (!code.Contains('-'))
             {
                 code = $"{code}-stable";
             }
 
             var release = releases.FirstOrDefault(r => r.TagName == code);
 
-            if(release == null)
+            if (release == null)
                 return null;
 
             return CreateVersion(release);

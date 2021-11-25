@@ -47,7 +47,7 @@ namespace GodotHub.Local
 
                 archive.ExtractToDirectory(destinationDirectory, true);
 
-                if(isMono)
+                if (isMono)
                 {
                     var directoryToRename = archive.Entries[0].FullName;
 
@@ -72,12 +72,12 @@ namespace GodotHub.Local
         public int Launch(string version, string[] commandLine)
         {
             var installedVersion = FindInstalledVersion(version);
-            if(installedVersion != null)
+            if (installedVersion != null)
             {
                 (var osPlatform, var architecture) = CurrentOS.GetOsInfo();
                 var editorPaths = installedVersion.GetSupportedEditorExecutables(osPlatform, architecture);
 
-                if(editorPaths.Any())
+                if (editorPaths.Any())
                 {
                     Process.Start(new ProcessStartInfo(editorPaths.First().EditorPath, string.Join(" ", commandLine))
                     {

@@ -1,12 +1,8 @@
 ﻿using GodotHub.Core;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace GodotHub.Commands
 {
@@ -29,7 +25,7 @@ namespace GodotHub.Commands
                 Indented = true
             };
 
-            public string? UseVersion {  get; set; }
+            public string? UseVersion { get; set; }
 
             public bool Migrate { get; set; }
 
@@ -41,7 +37,7 @@ namespace GodotHub.Commands
             public async Task<int> InvokeAsync(InvocationContext context)
             {
                 string? currentVersion = UseVersion;
-                if(currentVersion == null && Migrate && File.Exists(GodotHubPaths.VersionFileName))
+                if (currentVersion == null && Migrate && File.Exists(GodotHubPaths.VersionFileName))
                 {
                     currentVersion = await File.ReadAllTextAsync(GodotHubPaths.VersionFileName).ConfigureAwait(false);
                 }
@@ -51,7 +47,7 @@ namespace GodotHub.Commands
 
                 writer.WriteStartObject();
 
-                if(currentVersion != null)
+                if (currentVersion != null)
                 {
                     writer.WriteString("version", currentVersion);
                 }
@@ -59,7 +55,7 @@ namespace GodotHub.Commands
                 foreach (var (key, value) in _configuration.AsEnumerable())
                 {
                     // SKIP environment variables
-                    if(Environment.GetEnvironmentVariable(key) != null || key == "contentRoot")
+                    if (Environment.GetEnvironmentVariable(key) != null || key == "contentRoot")
                         continue;
 
                     writer.WriteString(key, value);
@@ -67,7 +63,7 @@ namespace GodotHub.Commands
 
                 writer.WriteEndObject();
 
-                if(Migrate && currentVersion != null)
+                if (Migrate && currentVersion != null)
                 {
                     File.Delete(GodotHubPaths.VersionFileName);
                 }

@@ -1,12 +1,7 @@
 ﻿using GodotHub.Core;
 using GodotHub.Local;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GodotHub.Commands.Deprecated
 {

@@ -4,7 +4,6 @@ using GodotHub.Online;
 using ShellProgressBar;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.Runtime.InteropServices;
 
 namespace GodotHub.Commands
 {
