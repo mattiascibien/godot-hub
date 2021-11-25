@@ -7,6 +7,10 @@ namespace GodotHub.Online
     {
         public bool IsMono { get; }
 
+        public bool IsHeadless { get; }
+
+        public bool IsServer { get; }
+
         public string FileName { get; }
 
         public Uri DownloadUrl { get; }
@@ -21,6 +25,8 @@ namespace GodotHub.Online
         {
             DownloadUrl = url;
             IsMono = url.ToString().Contains("mono");
+            IsHeadless = url.ToString().Contains("headless");
+            IsServer = url.ToString().Contains("server");
             FileName = Path.GetFileName(url.AbsolutePath);
 
             if (FileName.Contains("win"))

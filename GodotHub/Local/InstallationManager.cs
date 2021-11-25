@@ -31,10 +31,13 @@ namespace GodotHub.Local
             return installedVersions.FirstOrDefault(x => x.ToString() == version);
         }
 
-        public async Task InstallPackageAsync(string versionName, string packageFile, bool isMono)
+        public async Task InstallPackageAsync(string versionName, string packageFile, bool isMono, bool isHeadless)
         {
             await Task.Run(() =>
             {
+                if(isHeadless)
+                    versionName = $"{versionName}-headless";
+
                 string destinationDirectory = _installationPath;
 
                 using var stream = File.OpenRead(packageFile);
@@ -53,6 +56,7 @@ namespace GodotHub.Local
 
                     Directory.Move(Path.Combine(destinationDirectory, directoryToRename), Path.Combine(destinationDirectory, $"{versionName}-mono"));
                 }
+
             }).ConfigureAwait(false);
         }
 

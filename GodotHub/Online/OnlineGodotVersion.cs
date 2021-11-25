@@ -23,9 +23,15 @@ namespace GodotHub.Online
             IsStable = string.IsNullOrEmpty(PostFix);
         }
 
-        public OnlineGodotPackage? GetPackageForSystem(OSPlatform osPlatform, Architecture architecture, bool mono)
+        public OnlineGodotPackage? GetPackageForSystem(
+            OSPlatform osPlatform, Architecture architecture,
+            bool mono, bool headless)
         {
-            return Packages.FirstOrDefault(pkg => pkg.IsSupported(osPlatform, architecture) && pkg.IsMono == mono);
+            return Packages.FirstOrDefault(
+                pkg => pkg.IsSupported(osPlatform, architecture) &&
+                pkg.IsMono == mono &&
+                pkg.IsHeadless == headless &&
+                !pkg.IsServer); // we exclude server packages
         }
 
         public override string ToString()

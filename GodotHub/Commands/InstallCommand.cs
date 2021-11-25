@@ -17,13 +17,12 @@ namespace GodotHub.Commands
             includeUnstableOption.AddAlias("-u");
             Add(includeUnstableOption);
 
-            var forceOption = new Option<bool>("--force", () => false, "Force a reinstall even if the version is already installed");
-            forceOption.AddAlias("-f");
-            Add(forceOption);
-
-            var monoOption = new Option<bool>("--mono", () => false, "Force a reinstall even if the version is already installed");
+            var monoOption = new Option<bool>("--mono", () => false, "Install a version that has mono");
             monoOption.AddAlias("-m");
             Add(monoOption);
+
+            var headlessOption = new Option<bool>("--headless", () => false, "Installa a headless version");
+            Add(headlessOption);
         }
 
         public class CommandHandler : ICommandHandler
@@ -33,8 +32,12 @@ namespace GodotHub.Commands
             private readonly IOnlineRepository _onlineRepository;
 
             public string Version { get; set; } = "";
+
             public bool Unstable { get; set; }
+
             public bool Mono { get; set; }
+
+            public bool Headless { get; set; }
 
             public CommandHandler(GodotHubPaths constants, InstallationManager installationManager, IOnlineRepository onlineRepository)
             {
@@ -45,7 +48,7 @@ namespace GodotHub.Commands
 
             public async Task<int> InvokeAsync(InvocationContext context)
             {
-                Console.WriteLine($"Checking availability of {Version} (mono = {Mono})");
+                Console.WriteLine($"Checking availability of {Version} (mono = {Mono}) (headless = {Headless})");
 
                 OnlineGodotVersion? versionToDownload;
                 if (Version == "latest")
@@ -72,7 +75,7 @@ namespace GodotHub.Commands
                 }
 
                 (var osPlatform, var architecture) = CurrentOS.GetOsInfo();
-                var packageToDownload = versionToDownload.GetPackageForSystem(osPlatform, architecture, Mono);
+                var packageToDownload = versionToDownload.GetPackageForSystem(osPlatform, architecture, Mono, Headless);
 
                 if (packageToDownload == null)
                 {
@@ -82,7 +85,7 @@ namespace GodotHub.Commands
 
                 await DownloadAndExtract(packageToDownload).ConfigureAwait(false);
 
-                Console.WriteLine($"Version {Version} (mono = ({Mono}) installed");
+                Console.WriteLine($"Version {Version} (mono = {Mono}) (headless = {Headless}) installed");
                 return 0;
             }
 
@@ -93,7 +96,7 @@ namespace GodotHub.Commands
                 using var progressbar = new ProgressBar(10000, "Downloading");
                 var outFile = await fileDonwloader.DownloadFileAsync(_constants.DownloadsDirectory, progressbar.AsProgress<float>()).ConfigureAwait(false);
 
-                await _installationManager.InstallPackageAsync(Version, outFile, Mono).ConfigureAwait(false);
+                await _installationManager.InstallPackageAsync(Version, outFile, Mono, Headless).ConfigureAwait(false);
             }
         }
     }
