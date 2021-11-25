@@ -6,18 +6,21 @@ namespace GodotHub.Local
 {
     public class InstallationManager
     {
-        public string InstallationPath { get; }
+        private readonly ILinkCreator _linkCreator;
 
-        public InstallationManager(GodotHubPaths constants)
+        private readonly string _installationPath;
+
+        public InstallationManager(GodotHubPaths constants, ILinkCreator linkCreator)
         {
-            InstallationPath = constants.InstallationDirectory;
+            _installationPath = constants.InstallationDirectory;
+            _linkCreator = linkCreator;
         }
 
         public IEnumerable<LocalGodotVersion> GetInstalledVersions()
         {
-            foreach (var item in Directory.EnumerateDirectories(InstallationPath))
+            foreach (var item in Directory.EnumerateDirectories(_installationPath))
             {
-                yield return new LocalGodotVersion(item);
+                yield return new LocalGodotVersion(item, _linkCreator.IsLink(item));
             }
         }
 
@@ -32,7 +35,7 @@ namespace GodotHub.Local
         {
             await Task.Run(() =>
             {
-                string destinationDirectory = InstallationPath;
+                string destinationDirectory = _installationPath;
 
                 using var stream = File.OpenRead(packageFile);
                 using var archive = new ZipArchive(stream);

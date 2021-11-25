@@ -18,7 +18,7 @@ namespace GodotHub.Local
 
         public bool IsExternal { get;}
 
-        public LocalGodotVersion(string path)
+        public LocalGodotVersion(string path, bool isExternal)
         {
             InstallationPath = path;
             HasMono = Directory.Exists(Path.Combine(InstallationPath, "GodotSharp"));
@@ -26,7 +26,7 @@ namespace GodotHub.Local
             Version = Version.Parse(versionString[0]);
             PostFix = versionString.Length <= 1 || versionString[1] == "mono" ? null : versionString[1];
             IsStable = string.IsNullOrEmpty(PostFix);
-            IsExternal = LinkUtils.IsLink(InstallationPath);
+            IsExternal = isExternal;
         }
 
         public IEnumerable<EditorExecutable> GetSupportedEditorExecutables(OSPlatform osPlatform, Architecture architecture)
