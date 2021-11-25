@@ -25,21 +25,15 @@ namespace GodotHub
                     {
                         var defaults = new Dictionary<string, string>()
                         {
-                            { "godothub_root", "{HOME}/.godot-hub" },
-                            { "installation_directory", "{godothub_root}/installations" },
-                            { "donwloads_directory", "{godothub_root}/downloads" }
+                            { "godothub_root", string.Format("$({0})/.godot-hub", OperatingSystem.IsWindows() ? "USERPROFILE" : "HOME") },
+                            { "installation_directory", "$(godothub_root)/installations" },
+                            { "donwloads_directory", "$(godothub_root)/downloads" }
                         };
-
-                        if (OperatingSystem.IsWindows())
-                        {
-                            defaults["godothub_root"] = "{USERPROFILE}/.godot-hub";
-                        }
-
                         builder.AddInMemoryCollection(defaults);
 
                         builder.AddEnvironmentVariables("GODOTHUB_");
                         builder.AddJsonFile(GodotHubPaths.LocalConfigFilename, optional: true, reloadOnChange: true); // this is relative to the current directory
-                        builder.EnableSubstitutions(exceptionOnMissingVariables: true);
+                        builder.EnableSubstitutions("$(", ")", exceptionOnMissingVariables: true);
                     });
 
                     host.ConfigureServices(services =>
