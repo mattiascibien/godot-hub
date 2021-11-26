@@ -13,23 +13,17 @@ namespace GodotHub.Core
     {
         public static bool IsSupported(this IOsSpecific osSpecific, OSPlatform osPlatform, Architecture architecture)
         {
-            if (osSpecific.Architecture != architecture) 
+            if (osSpecific.Architecture != architecture)
                 return false;
-            
-            switch (osSpecific.OperatingSystem)
-            {
-                case GodotOperatingSystem.Windows:
-                    return osPlatform == OSPlatform.Windows;
-                case GodotOperatingSystem.OSX:
-                    return osPlatform == OSPlatform.OSX;
-                case GodotOperatingSystem.X11:
-                    return osPlatform == OSPlatform.Linux || osPlatform == OSPlatform.FreeBSD;
-                case GodotOperatingSystem.LinuxHeadless:
-                case GodotOperatingSystem.LinuxServer:
-                    return osPlatform == OSPlatform.Linux;
-            }
 
-            return false;
+            return osSpecific.OperatingSystem switch
+            {
+                GodotOperatingSystem.Windows => osPlatform == OSPlatform.Windows,
+                GodotOperatingSystem.OSX => osPlatform == OSPlatform.OSX,
+                GodotOperatingSystem.X11 => osPlatform == OSPlatform.Linux || osPlatform == OSPlatform.FreeBSD,
+                GodotOperatingSystem.LinuxHeadless or GodotOperatingSystem.LinuxServer => osPlatform == OSPlatform.Linux,
+                _ => false,
+            };
         }
     }
 }

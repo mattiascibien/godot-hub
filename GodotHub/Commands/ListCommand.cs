@@ -3,7 +3,6 @@ using GodotHub.Online;
 using GodotHub.Resources;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using GodotHub.Resources;
 
 namespace GodotHub.Commands
 {

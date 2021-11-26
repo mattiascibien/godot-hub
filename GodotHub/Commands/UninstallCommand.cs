@@ -2,7 +2,6 @@
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using GodotHub.Resources;
-using GodotHub.Resources;
 
 namespace GodotHub.Commands
 {
