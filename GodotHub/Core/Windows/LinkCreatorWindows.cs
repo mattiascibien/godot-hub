@@ -9,7 +9,7 @@ namespace GodotHub.Core.Windows
             UACHelper.UACHelper.StartElevated(new ProcessStartInfo
             {
                 FileName = "cmd.exe",
-                Arguments = string.Format("/c mklink /d {0} \"{1}\"", Path.Combine(currentDirectory, linkName), target),
+                Arguments = $"/c mklink /d {Path.Combine(currentDirectory, linkName)} \"{target}\"",
                 UseShellExecute = true
             });
         }
@@ -20,7 +20,7 @@ namespace GodotHub.Core.Windows
             UACHelper.UACHelper.StartElevated(new ProcessStartInfo
             {
                 FileName = "cmd.exe",
-                Arguments = string.Format("/c rmdir \"{0}\"", path),
+                Arguments = $"/c rmdir \"{path}\"",
                 UseShellExecute = true
             });
         }

@@ -1,15 +1,16 @@
 ﻿using GodotHub.Core;
 using System.CommandLine;
 using System.CommandLine.Invocation;
+using GodotHub.Resources;
 
 namespace GodotHub.Commands
 {
     internal class RegisterCommand : Command
     {
-        public RegisterCommand() : base("register", "register an external godot installation")
+        public RegisterCommand() : base("register", Strings.RegisterCommandDescription)
         {
-            Add(new Argument<string>("customversion", "the custom version to use (i.e. X.Y-dev"));
-            Add(new Argument<string>("path", "the path to the godot installation"));
+            Add(new Argument<string>("customversion", Strings.RegisterCommandCustomVersionArgumentDescription));
+            Add(new Argument<string>("path", Strings.RegisterCommandPathArgumentDescription));
         }
 
         public class CommandHanlder : ICommandHandler
@@ -30,7 +31,7 @@ namespace GodotHub.Commands
             public Task<int> InvokeAsync(InvocationContext context)
             {
                 _linkCreator.CreateFolderLink(_constants.InstallationDirectory, CustomVersion, Path);
-                Console.WriteLine($"Registered {Path} as {CustomVersion}");
+                Console.WriteLine(Strings.RegisterCommandCompletedMessage, Path, CustomVersion);
                 return Task.FromResult(0);
             }
         }

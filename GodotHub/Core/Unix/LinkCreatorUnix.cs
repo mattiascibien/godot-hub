@@ -16,7 +16,7 @@ namespace GodotHub.Core.Unix
 
         public void DeleteFolderLink(string currentDirectory, string folderLink)
         {
-            string path = Path.Combine(currentDirectory, folderLink);
+            var path = Path.Combine(currentDirectory, folderLink);
             File.Delete(path);
         }
     }

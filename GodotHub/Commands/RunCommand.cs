@@ -2,18 +2,19 @@
 using Microsoft.Extensions.Configuration;
 using System.CommandLine;
 using System.CommandLine.Invocation;
+using GodotHub.Resources;
 
 namespace GodotHub.Commands
 {
     public class RunCommand : Command
     {
-        public RunCommand() : base("run", "Lanches Godot in the current directory")
+        public RunCommand() : base("run", Strings.RunCommandDescription)
         {
-            Option<string?> versionOption = new Option<string?>("--use-version", () => null, "The version to launch");
+            Option<string?> versionOption = new Option<string?>("--use-version", () => null, Strings.RunCommandUseVersionOptionDescription);
             versionOption.AddAlias("-u");
             AddOption(versionOption);
 
-            AddArgument(new Argument<string[]>("cmdline", "The command line to pass to godot"));
+            AddArgument(new Argument<string[]>("cmdline", Strings.RunCommandCmdLineArgumentDescription));
         }
 
         public class CommandHandler : ICommandHandler
@@ -45,7 +46,7 @@ namespace GodotHub.Commands
                 }
                 else
                 {
-                    Console.WriteLine("Cannot find a version to run. Specify it with -u <version> parameter");
+                    Console.WriteLine(Strings.RunCommandCannotFindVersionMessage);
                     returnValue = 1;
                 }
 

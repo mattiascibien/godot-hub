@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using GodotHub.Resources;
 
 namespace GodotHub.Core
 {
@@ -22,7 +23,7 @@ namespace GodotHub.Core
                 osPlatform = OSPlatform.FreeBSD;
 
             if (osPlatform == null)
-                throw new InvalidOperationException("Unsupported OS");
+                throw new InvalidOperationException(Strings.UnsupportedOSExceptionMessage);
 
             return (osPlatform.Value, architecture);
         }

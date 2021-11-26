@@ -40,7 +40,6 @@ namespace GodotHub.Local
                 .OrderByDescending(x => x.Priority);
         }
 
-
         public override string ToString()
         {
             string version = Version.ToString();

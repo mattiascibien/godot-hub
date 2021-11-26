@@ -1,14 +1,16 @@
 ﻿using GodotHub.Local;
 using System.CommandLine;
 using System.CommandLine.Invocation;
+using GodotHub.Resources;
+using GodotHub.Resources;
 
 namespace GodotHub.Commands
 {
     public class UninstallCommand : Command
     {
-        public UninstallCommand() : base("uninstall", "Uninstall a specific godot version")
+        public UninstallCommand() : base("uninstall", Strings.UninstallCommandDescription)
         {
-            Add(new Argument<string>("version", "The version to install"));
+            Add(new Argument<string>("version", Strings.UninstallCommandVersionArgumentDescription));
         }
 
         public class CommandHandler : ICommandHandler
@@ -24,10 +26,10 @@ namespace GodotHub.Commands
 
             public async Task<int> InvokeAsync(InvocationContext context)
             {
-                Console.WriteLine($"Uninstalling {Version}");
+                Console.WriteLine(Strings.UninstallCommandUninstallingMessage, Version);
                 await _installationManager.UninstallVersionAsync(Version).ConfigureAwait(false);
 
-                Console.WriteLine($"Godot {Version} uninstalled.");
+                Console.WriteLine(Strings.UninstallCommandUninstallCompleteMessage, Version);
                 return 0;
             }
         }

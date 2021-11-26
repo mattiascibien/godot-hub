@@ -1,6 +1,7 @@
 using GodotHub.Core;
 using GodotHub.Local;
 using GodotHub.Online;
+using GodotHub.Resources;
 using ShellProgressBar;
 using System.CommandLine;
 using System.CommandLine.Invocation;
@@ -9,19 +10,19 @@ namespace GodotHub.Commands
 {
     public class InstallCommand : Command
     {
-        public InstallCommand() : base("install", "Install manager for godot versions")
+        public InstallCommand() : base("install", Strings.InstallCommandDescription)
         {
-            Add(new Argument<string>("version", () => "latest", "The version to install"));
+            Add(new Argument<string>("version", () => "latest", Strings.InstallCommandVersionArgumentDescription));
 
-            var includeUnstableOption = new Option<bool>("--unstable", () => false, "Also check for unstable versions");
+            var includeUnstableOption = new Option<bool>("--unstable", () => false, Strings.InstallCommandUnstableOptionDescription);
             includeUnstableOption.AddAlias("-u");
             Add(includeUnstableOption);
 
-            var monoOption = new Option<bool>("--mono", () => false, "Install a version that has mono");
+            var monoOption = new Option<bool>("--mono", () => false, Strings.InstallCommandMonoOptionDescription);
             monoOption.AddAlias("-m");
             Add(monoOption);
 
-            var headlessOption = new Option<bool>("--headless", () => false, "Installa a headless version");
+            var headlessOption = new Option<bool>("--headless", () => false, Strings.InstallCommandHeadlessOptionDescription);
             Add(headlessOption);
         }
 
@@ -48,14 +49,14 @@ namespace GodotHub.Commands
 
             public async Task<int> InvokeAsync(InvocationContext context)
             {
-                Console.WriteLine($"Checking availability of {Version} (mono = {Mono}) (headless = {Headless})");
+                Console.WriteLine(Strings.InstallCommandCheckAvailabilityMessage, Version, Mono, Headless);
 
                 OnlineGodotVersion? versionToDownload;
                 if (Version == "latest")
                 {
                     versionToDownload = await _onlineRepository.GetLatestVersionAsync(Unstable).ConfigureAwait(false);
 
-                    Console.WriteLine(string.Format("Latest {0} version is {1}", Unstable ? "unstable" : "stable", versionToDownload));
+                    Console.WriteLine(Strings.InstallCommandLatestVersionMessage, Unstable ? "unstable" : "stable", versionToDownload);
                 }
                 else
                 {
@@ -64,13 +65,13 @@ namespace GodotHub.Commands
 
                 if (versionToDownload == null)
                 {
-                    Console.WriteLine($"Version {Version} was not found on the repository");
+                    Console.WriteLine(Strings.InstallCommandVersionNotFoundMessage, Version);
                     return 1;
                 }
 
                 if (Mono && !versionToDownload.HasMono)
                 {
-                    Console.WriteLine($"Version {Version} does not have a package with mono");
+                    Console.WriteLine(Strings.InstallCommandMonoNotFoundMessage, Version);
                     return 1;
                 }
 
@@ -79,13 +80,13 @@ namespace GodotHub.Commands
 
                 if (packageToDownload == null)
                 {
-                    Console.WriteLine($"Cannot find a package for {osPlatform}-{architecture}");
+                    Console.WriteLine(Strings.InstallCommandPackageNotFoundMessage, osPlatform, architecture);
                     return 1;
                 }
 
                 await DownloadAndExtract(packageToDownload).ConfigureAwait(false);
 
-                Console.WriteLine($"Version {Version} (mono = {Mono}) (headless = {Headless}) installed");
+                Console.WriteLine(Strings.InstallCommandInstallationCompleteMessage, Version, Mono, Headless);
                 return 0;
             }
 
@@ -93,7 +94,7 @@ namespace GodotHub.Commands
             {
                 using var fileDonwloader = new FileDownloader(packageToDownload.DownloadUrl.ToString());
 
-                using var progressbar = new ProgressBar(10000, "Downloading");
+                using var progressbar = new ProgressBar(10000, Strings.InstallCommandDownloadingMessage);
                 var outFile = await fileDonwloader.DownloadFileAsync(_constants.DownloadsDirectory, progressbar.AsProgress<float>()).ConfigureAwait(false);
 
                 await _installationManager.InstallPackageAsync(Version, outFile, Mono, Headless).ConfigureAwait(false);

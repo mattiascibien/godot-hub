@@ -10,6 +10,8 @@ using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
 using System.CommandLine.Parsing;
+using System.Globalization;
+using GodotHub.Resources;
 
 namespace GodotHub
 {
@@ -38,6 +40,7 @@ namespace GodotHub
 
                     host.ConfigureServices(services =>
                     {
+                        services.AddLocalization();
                         services.AddSingleton<GodotHubPaths>();
                         services.AddTransient<InstallationManager>();
                         services.AddTransient<IOnlineRepository, GithubOnlineRepository>();
@@ -78,7 +81,7 @@ namespace GodotHub
                 new UnregisterCommand(),
             };
 
-            rootCommand.Description = "Godot installer and version manager";
+            rootCommand.Description = Strings.RootCommandDescription;
             return new CommandLineBuilder(rootCommand);
         }
     }
