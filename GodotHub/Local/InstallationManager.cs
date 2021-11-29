@@ -4,20 +4,23 @@ using System.IO.Compression;
 
 namespace GodotHub.Local
 {
-    internal class InstallationManager
+    public class InstallationManager
     {
-        public string InstallationPath { get; }
+        private readonly ILinkCreator _linkCreator;
 
-        public InstallationManager(string installationPath)
+        private readonly string _installationPath;
+
+        public InstallationManager(GodotHubPaths constants, ILinkCreator linkCreator)
         {
-            InstallationPath = installationPath;
+            _installationPath = constants.InstallationDirectory;
+            _linkCreator = linkCreator;
         }
 
         public IEnumerable<LocalGodotVersion> GetInstalledVersions()
         {
-            foreach (var item in Directory.EnumerateDirectories(InstallationPath))
+            foreach (var item in Directory.EnumerateDirectories(_installationPath))
             {
-                yield return new LocalGodotVersion(item);
+                yield return new LocalGodotVersion(item, _linkCreator.IsLink(item));
             }
         }
 
@@ -28,11 +31,14 @@ namespace GodotHub.Local
             return installedVersions.FirstOrDefault(x => x.ToString() == version);
         }
 
-        public async Task InstallPackageAsync(string versionName, string packageFile, bool isMono)
+        public async Task InstallPackageAsync(string versionName, string packageFile, bool isMono, bool isHeadless)
         {
             await Task.Run(() =>
             {
-                string destinationDirectory = InstallationPath;
+                if(isHeadless)
+                    versionName = $"{versionName}-headless";
+
+                string destinationDirectory = _installationPath;
 
                 using var stream = File.OpenRead(packageFile);
                 using var archive = new ZipArchive(stream);
@@ -44,7 +50,7 @@ namespace GodotHub.Local
 
                 archive.ExtractToDirectory(destinationDirectory, true);
 
-                if(isMono)
+                if (isMono)
                 {
                     var directoryToRename = archive.Entries[0].FullName;
 
@@ -67,25 +73,31 @@ namespace GodotHub.Local
             }).ConfigureAwait(false);
         }
 
-        public void Launch(string version, string[] commandLine)
+        public int Launch(string version, string[] commandLine)
         {
             var installedVersion = FindInstalledVersion(version);
-            if(installedVersion != null)
+            if (installedVersion != null)
             {
                 (var osPlatform, var architecture) = CurrentOS.GetOsInfo();
                 var editorPaths = installedVersion.GetSupportedEditorExecutables(osPlatform, architecture);
 
-                if(editorPaths.Any())
+                if (editorPaths.Any())
                 {
                     Process.Start(new ProcessStartInfo(editorPaths.First().EditorPath, string.Join(" ", commandLine))
                     {
-                        UseShellExecute = true
+                        //UseShellExecute = true
                     });
+
+                    return 0;
                 }
+
+                Console.WriteLine($"Version {version} does not seem to have a viable editor");
+                return 1;
             }
             else
             {
-                Console.WriteLine($"Version {version} is not installed. Install it with 'install {version}'");
+                Console.WriteLine($"Version {version} is not installed.");
+                return 1;
             }
         }
     }

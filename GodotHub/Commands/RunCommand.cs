@@ -1,39 +1,57 @@
 ﻿using GodotHub.Local;
-using System;
-using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.CommandLine.Parsing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GodotHub.Resources;
 
 namespace GodotHub.Commands
 {
     public class RunCommand : Command
     {
-        public RunCommand() : base("run", "Lanches Godot in the current directory")
+        public RunCommand() : base("run", Strings.RunCommandDescription)
         {
-            Option<string> versionOption = new Option<string>("--use-version", () => "", "The version to launch");
+            Option<string?> versionOption = new Option<string?>("--use-version", () => null, Strings.RunCommandUseVersionOptionDescription);
             versionOption.AddAlias("-u");
-            Add(versionOption);
-            
-            Add(new Argument<string[]>("cmdline", "The command line to pass to godot"));
+            AddOption(versionOption);
 
-            Handler = CommandHandler.Create<string?, string[]>(async (useVersion, cmdline) =>
+            AddArgument(new Argument<string[]>("cmdline", Strings.RunCommandCmdLineArgumentDescription));
+        }
+
+        public class CommandHandler : ICommandHandler
+        {
+            private readonly IConfiguration _configuration;
+            private readonly InstallationManager _installationManager;
+
+            public string? UseVersion { get; set; }
+
+            public string[] CmdLine { get; set; } = Array.Empty<string>();
+
+            public CommandHandler(InstallationManager installationManager, IConfiguration configuration)
             {
-                if(string.IsNullOrEmpty(useVersion))
+                _configuration = configuration;
+                _installationManager = installationManager;
+            }
+
+            public Task<int> InvokeAsync(InvocationContext context)
+            {
+                if (string.IsNullOrEmpty(UseVersion))
                 {
-                    var versionFile = Directory.EnumerateFiles(Directory.GetCurrentDirectory()).FirstOrDefault(f => Path.GetFileName(f) == Constants.VERSION_FILE_NAME);
-                    if(versionFile != null)
-                    {
-                        useVersion = (await File.ReadAllTextAsync(versionFile).ConfigureAwait(false)).Trim();
-                        Console.WriteLine($"Using version {useVersion} from {Constants.VERSION_FILE_NAME}");
-                    }
+                    UseVersion = _configuration["version"];
                 }
-                if(useVersion != null)
-                    new InstallationManager(Constants.InstallationDirectory).Launch(useVersion, cmdline);
-            });
+
+                int returnValue;
+                if (UseVersion != null)
+                {
+                    returnValue = _installationManager.Launch(UseVersion, CmdLine);
+                }
+                else
+                {
+                    Console.WriteLine(Strings.RunCommandCannotFindVersionMessage);
+                    returnValue = 1;
+                }
+
+                return Task.FromResult(returnValue);
+            }
         }
     }
 }

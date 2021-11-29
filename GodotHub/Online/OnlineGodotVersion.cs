@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace GodotHub.Online
 {
-    public class OnlineGodotVersion : GodotVersion
+    public sealed class OnlineGodotVersion : GodotVersion
     {
         public override Version Version { get; }
 
@@ -23,9 +23,15 @@ namespace GodotHub.Online
             IsStable = string.IsNullOrEmpty(PostFix);
         }
 
-        public OnlineGodotPackage? GetPackageForSystem(OSPlatform osPlatform, Architecture architecture, bool mono)
+        public OnlineGodotPackage? GetPackageForSystem(
+            OSPlatform osPlatform, Architecture architecture,
+            bool mono, bool headless)
         {
-            return Packages.FirstOrDefault(pkg => pkg.IsSupported(osPlatform, architecture) && pkg.IsMono == mono);
+            return Packages.FirstOrDefault(
+                pkg => pkg.IsSupported(osPlatform, architecture) &&
+                pkg.IsMono == mono &&
+                pkg.IsHeadless == headless &&
+                !pkg.IsServer); // we exclude server packages
         }
 
         public override string ToString()
@@ -33,11 +39,6 @@ namespace GodotHub.Online
             string version = Version.ToString();
             if (!IsStable)
                 version += $"-{PostFix}";
-
-            //if (HasMono)
-            //{
-            //    return $"{version}-mono";
-            //}
 
             return version;
         }

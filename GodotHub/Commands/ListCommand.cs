@@ -1,5 +1,6 @@
 using GodotHub.Local;
 using GodotHub.Online;
+using GodotHub.Resources;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 
@@ -7,53 +8,63 @@ namespace GodotHub.Commands
 {
     public class ListCommand : Command
     {
-        public ListCommand() : base("list", "Lists installed (and available) Godot versions")
+        public ListCommand() : base("list", Strings.ListCommandDescription)
         {
-            var installedOption = new Option<bool>("--online", () => false, "List also the available Godot versions");
+            var installedOption = new Option<bool>("--online", () => false, Strings.ListCommandOnlineOptionDescription);
             installedOption.AddAlias("-o");
             Add(installedOption);
-
-            Handler = CommandHandler.Create<bool>((online) => ListVersions(online));
         }
 
-        private static async Task ListVersions(bool includeOnline)
+        public class CommandHandler : ICommandHandler
         {
-            await ListInstalledVersions().ConfigureAwait(false);
+            private readonly IOnlineRepository _onlineRepository;
+            private readonly InstallationManager _installationManager;
 
-            if (includeOnline)
+            public CommandHandler(InstallationManager installationManager, IOnlineRepository onlineRepository)
             {
-                Console.WriteLine("");
-                await ListOnlineVersions().ConfigureAwait(false);
+                _onlineRepository = onlineRepository;
+                _installationManager = installationManager;
             }
-        }
 
-        private static async Task ListInstalledVersions()
-        {
-            await Task.Run(() =>
+            public bool Online { get; set; }
+
+            public async Task<int> InvokeAsync(InvocationContext context)
             {
-                var installationsManager = new InstallationManager(Constants.InstallationDirectory);
+                await ListInstalledVersions().ConfigureAwait(false);
 
-                var installedVersions = installationsManager.GetInstalledVersions();
-
-                Console.WriteLine("Installed Godot Versions\n");
-                foreach (var item in installedVersions)
+                if (Online)
                 {
-                    if(item.IsExternal)
-                        Console.WriteLine($" - {item} (external)");
-                    else
-                        Console.WriteLine($" - {item}");
+                    Console.WriteLine("");
+                    await ListOnlineVersions().ConfigureAwait(false);
                 }
-            }).ConfigureAwait(false);
-        }
 
-        private static async Task ListOnlineVersions()
-        {
-            IOnlineRepository onlineRepository = new GithubVersionOnlineRepository();
+                return 0;
+            }
 
-            Console.WriteLine("Available Godot Versions\n");
-            await foreach (var item in onlineRepository.GetVersionsAsync())
+            private async Task ListInstalledVersions()
             {
-                Console.WriteLine($" - {item} (mono available = {item.HasMono})");
+                await Task.Run(() =>
+                {
+                    var installedVersions = _installationManager.GetInstalledVersions();
+
+                    Console.WriteLine(Strings.ListCommandInstalledVersionsHeader);
+                    foreach (var item in installedVersions)
+                    {
+                        if (item.IsExternal)
+                            Console.WriteLine(Strings.ListCommandExternalVersionFormat, item);
+                        else
+                            Console.WriteLine(Strings.ListCommandLocalVersionFormat, item);
+                    }
+                }).ConfigureAwait(false);
+            }
+
+            private async Task ListOnlineVersions()
+            {
+                Console.WriteLine(Strings.ListCommandOnlineVersionsHeader);
+                await foreach (var item in _onlineRepository.GetVersionsAsync())
+                {
+                    Console.WriteLine(Strings.ListCommandOnlineVersionFormat, item, item.HasMono);
+                }
             }
         }
     }

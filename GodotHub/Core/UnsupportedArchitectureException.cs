@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GodotHub.Resources;
 
 namespace GodotHub.Core
 {
     [Serializable]
     public class UnsupportedArchitectureException : Exception
     {
-        public UnsupportedArchitectureException() : base("Cannot determine architecture") { }
+        public UnsupportedArchitectureException() : base(Strings.UnsupportedArchitectureExceptionDefaultMessage) { }
 
-        public UnsupportedArchitectureException(string fileName) : base($"Cannot determine architecture for package {fileName}") { }
+        public UnsupportedArchitectureException(string fileName) : base(string.Format(Strings.UnsupportedArchitectureExceptionMessageWithParameter, fileName)) { }
 
-        public UnsupportedArchitectureException(string fileName, Exception inner) : base($"Cannot determine architecture for package {fileName}", inner) { }
+        public UnsupportedArchitectureException(string fileName, Exception inner) : base(string.Format(Strings.UnsupportedArchitectureExceptionMessageWithParameter, fileName), inner) { }
 
         protected UnsupportedArchitectureException(
           System.Runtime.Serialization.SerializationInfo info,

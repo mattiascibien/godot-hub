@@ -1,26 +1,39 @@
 ﻿using GodotHub.Core;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GodotHub.Resources;
 
 namespace GodotHub.Commands
 {
     internal class RegisterCommand : Command
     {
-        public RegisterCommand() : base("register", "register an external godot installation")
+        public RegisterCommand() : base("register", Strings.RegisterCommandDescription)
         {
-            Add(new Argument<string>("customversion", "the custom version to use (i.e. X.Y-dev"));
-            Add(new Argument<string>("path", "the path to the godot installation"));
+            Add(new Argument<string>("customversion", Strings.RegisterCommandCustomVersionArgumentDescription));
+            Add(new Argument<string>("path", Strings.RegisterCommandPathArgumentDescription));
+        }
 
-            Handler = CommandHandler.Create<string, string>((customversion, path) =>
+        public class CommandHanlder : ICommandHandler
+        {
+            private readonly GodotHubPaths _constants;
+            private readonly ILinkCreator _linkCreator;
+
+            public string CustomVersion { get; set; } = "";
+
+            public string Path { get; set; } = "";
+
+            public CommandHanlder(GodotHubPaths constants, ILinkCreator linkCreator)
             {
-                LinkCreator.CreateFolderLink(Constants.InstallationDirectory, customversion, path);
-                Console.WriteLine($"Registered {path} as {customversion}");
-            });
+                _constants = constants;
+                _linkCreator = linkCreator;
+            }
+
+            public Task<int> InvokeAsync(InvocationContext context)
+            {
+                _linkCreator.CreateFolderLink(_constants.InstallationDirectory, CustomVersion, Path);
+                Console.WriteLine(Strings.RegisterCommandCompletedMessage, Path, CustomVersion);
+                return Task.FromResult(0);
+            }
         }
     }
 }

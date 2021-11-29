@@ -2,7 +2,7 @@ using Octokit;
 
 namespace GodotHub.Online
 {
-    public class GithubVersionOnlineRepository : IOnlineRepository
+    public class GithubOnlineRepository : IOnlineRepository
     {
         private static readonly string[] Exclusions = new[]
         {
@@ -17,7 +17,7 @@ namespace GodotHub.Online
 
         private readonly GitHubClient _githubClient;
 
-        public GithubVersionOnlineRepository()
+        public GithubOnlineRepository()
         {
             _githubClient = new GitHubClient(new ProductHeaderValue("GodotHub"));
         }
@@ -67,14 +67,14 @@ namespace GodotHub.Online
             var releases = await _githubClient.Repository.Release.GetAll(OWNER, REPO).ConfigureAwait(false);
 
             // if this is a stable version, append stable
-            if(!code.Contains('-'))
+            if (!code.Contains('-'))
             {
                 code = $"{code}-stable";
             }
 
             var release = releases.FirstOrDefault(r => r.TagName == code);
 
-            if(release == null)
+            if (release == null)
                 return null;
 
             return CreateVersion(release);

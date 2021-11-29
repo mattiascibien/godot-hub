@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace GodotHub.Local
 {
-    public class LocalGodotVersion : GodotVersion
+    public sealed class LocalGodotVersion : GodotVersion
     {
         public override Version Version { get; }
 
@@ -16,9 +16,9 @@ namespace GodotHub.Local
 
         public string InstallationPath { get; }
 
-        public bool IsExternal { get;}
+        public bool IsExternal { get; }
 
-        public LocalGodotVersion(string path)
+        public LocalGodotVersion(string path, bool isExternal)
         {
             InstallationPath = path;
             HasMono = Directory.Exists(Path.Combine(InstallationPath, "GodotSharp"));
@@ -26,7 +26,7 @@ namespace GodotHub.Local
             Version = Version.Parse(versionString[0]);
             PostFix = versionString.Length <= 1 || versionString[1] == "mono" ? null : versionString[1];
             IsStable = string.IsNullOrEmpty(PostFix);
-            IsExternal = LinkCreator.IsLink(InstallationPath);
+            IsExternal = isExternal;
         }
 
         public IEnumerable<EditorExecutable> GetSupportedEditorExecutables(OSPlatform osPlatform, Architecture architecture)
@@ -39,7 +39,6 @@ namespace GodotHub.Local
                 .Where(x => x.IsSupported(osPlatform, architecture))
                 .OrderByDescending(x => x.Priority);
         }
-
 
         public override string ToString()
         {

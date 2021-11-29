@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GodotHub.Online
+﻿namespace GodotHub.Online
 {
     public class FileDownloader : IDisposable
     {
-        private HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
 
-        private string _uri;
+        private readonly string _uri;
 
         public FileDownloader(string uri)
         {
@@ -85,11 +79,7 @@ namespace GodotHub.Online
         {
             if (disposing)
             {
-                if (_httpClient != null)
-                {
-                    _httpClient.Dispose();
-                    _httpClient = null;
-                }
+                _httpClient.Dispose();
             }
         }
     }

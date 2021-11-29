@@ -1,32 +1,43 @@
 ﻿using GodotHub.Core;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GodotHub.Resources;
 
 namespace GodotHub.Commands
 {
     public class UnregisterCommand : Command
     {
-        public UnregisterCommand() : base("unregister", "unregisters an external godot installation")
+        public UnregisterCommand() : base("unregister", Strings.UnregisterCommandDescription)
         {
-            Add(new Argument<string>("customversion", "the custom version to unregister (i.e. X.Y-dev"));
+            Add(new Argument<string>("customversion", Strings.UnregisterCommandCustomVersionArgumentDescription));
+        }
 
-            Handler = CommandHandler.Create<string>((customversion) =>
+        public class CommandHandler : ICommandHandler
+        {
+            private readonly GodotHubPaths _constants;
+            private readonly ILinkCreator _linkCreator;
+
+            public string CustomVersion { get; set; } = "";
+
+            public CommandHandler(GodotHubPaths constants, ILinkCreator linkCreator)
             {
-                if(LinkCreator.IsLink(Path.Combine(Constants.InstallationDirectory, customversion)))
+                _constants = constants;
+                _linkCreator = linkCreator;
+            }
+
+            public Task<int> InvokeAsync(InvocationContext context)
+            {
+                if (_linkCreator.IsLink(Path.Combine(_constants.InstallationDirectory, CustomVersion)))
                 {
-                    LinkCreator.DeleteFolderLink(Constants.InstallationDirectory, customversion);
-                    Console.WriteLine($"Unregistered {customversion}");
+                    _linkCreator.DeleteFolderLink(_constants.InstallationDirectory, CustomVersion);
+                    Console.WriteLine(Strings.UnregisterCommandUnregisterCompleteMessage, CustomVersion);
                 }
                 else
                 {
-                    Console.WriteLine($"Version {customversion} does not correspond to an external version");
+                    Console.WriteLine(Strings.UnregisterCommandVersionNotExternalMessage, CustomVersion);
                 }
-            });
+                return Task.FromResult(0);
+            }
         }
     }
 }

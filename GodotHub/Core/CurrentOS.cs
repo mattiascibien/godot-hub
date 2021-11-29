@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
+using GodotHub.Resources;
 
 namespace GodotHub.Core
 {
@@ -14,7 +10,7 @@ namespace GodotHub.Core
             OSPlatform? osPlatform = null;
             var architecture = RuntimeInformation.OSArchitecture;
 
-            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 osPlatform = OSPlatform.Windows;
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -26,8 +22,8 @@ namespace GodotHub.Core
             if (RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
                 osPlatform = OSPlatform.FreeBSD;
 
-            if(osPlatform == null)
-                throw new InvalidOperationException("Unsupported OS");
+            if (osPlatform == null)
+                throw new InvalidOperationException(Strings.UnsupportedOSExceptionMessage);
 
             return (osPlatform.Value, architecture);
         }

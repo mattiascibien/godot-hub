@@ -5,7 +5,7 @@ using Xunit;
 namespace GodotHub.Tests.Core
 {
     public class CurrentOSTests
-    { 
+    {
         [SkippableFact]
         public void ReturnsCorrectOSWindows()
         {
