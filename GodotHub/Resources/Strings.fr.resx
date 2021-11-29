@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="InstallCommandDescription" xml:space="preserve">
+    <value>Installer une version de Godot </value>
+  </data>
+  <data name="InstallCommandUnstableOptionDescription" xml:space="preserve">
+    <value>Vérifier les versions instables </value>
+  </data>
+  <data name="InstallCommandVersionArgumentDescription" xml:space="preserve">
+    <value>La version à installer </value>
+  </data>
+  <data name="ListCommandDescription" xml:space="preserve">
+    <value>Listes installées (et disponibles) Godot </value>
+  </data>
+  <data name="ListCommandOnlineOptionDescription" xml:space="preserve">
+    <value>Lister les versions de Godot disponibles en ligne </value>
+  </data>
+  <data name="RootCommandDescription" xml:space="preserve">
+    <value>Installateur Godot et gestionnaire de version </value>
+  </data>
+  <data name="UnsupportedOSExceptionMessage" xml:space="preserve">
+    <value>Système d'exploitation non pris en charge </value>
+  </data>
+  <data name="UnsupportedArchitectureExceptionDefaultMessage" xml:space="preserve">
+    <value>Impossible de déterminer l'architecture </value>
+  </data>
+  <data name="UnsupportedArchitectureExceptionMessageWithParameter" xml:space="preserve">
+    <value>Impossible de déterminer l'architecture du package {0}</value>
+  </data>
+  <data name="CreateLocalConfigurationCommandDescription" xml:space="preserve">
+    <value>Crée une configuration locale pour le dossier </value>
+  </data>
+  <data name="LocalConfigurationCommandMigrateOptionDescription" xml:space="preserve">
+    <value>Migre l'ancien fichier .godot-version</value>
+  </data>
+  <data name="CreateLocalConfigurationCommandUseVersionOptionDescription" xml:space="preserve">
+    <value>Spécifie la version à utiliser dans notre configuration locale </value>
+  </data>
+  <data name="InstallCommandMonoOptionDescription" xml:space="preserve">
+    <value>Installer une version qui a Mono </value>
+  </data>
+  <data name="InstallCommandHeadlessOptionDescription" xml:space="preserve">
+    <value>Installer une version "headless"</value>
+  </data>
+  <data name="InstallCommandCheckAvailabilityMessage" xml:space="preserve">
+    <value>Vérification de la disponibilité de {0} (mono = {1}) (headless = {2})</value>
+  </data>
+  <data name="InstallCommandLatestVersionMessage" xml:space="preserve">
+    <value>La dernière {0} version est {1}</value>
+  </data>
+  <data name="InstallCommandVersionNotFoundMessage" xml:space="preserve">
+    <value>La version {0} n'a pas été trouvée sur le référentiel </value>
+  </data>
+  <data name="InstallCommandMonoNotFoundMessage" xml:space="preserve">
+    <value>La version {0} n'a pas de package avec Mono </value>
+  </data>
+  <data name="InstallCommandPackageNotFoundMessage" xml:space="preserve">
+    <value>Impossible de trouver un package pour {0} - {1}</value>
+  </data>
+  <data name="InstallCommandInstallationCompleteMessage" xml:space="preserve">
+    <value>Version {0} (Mono = {1} ) ("headless" = {2} ) installée </value>
+  </data>
+  <data name="InstallCommandDownloadingMessage" xml:space="preserve">
+    <value>Téléchargement</value>
+  </data>
+  <data name="ListCommandInstalledVersionsHeader" xml:space="preserve">
+    <value>Versions de Godot installées</value>
+  </data>
+  <data name="ListCommandExternalVersionFormat" xml:space="preserve">
+    <value>- {0}(externe)</value>
+  </data>
+  <data name="ListCommandLocalVersionFormat" xml:space="preserve">
+    <value>- {0}</value>
+  </data>
+  <data name="ListCommandOnlineVersionsHeader" xml:space="preserve">
+    <value>Versions disponibles de Godot </value>
+  </data>
+  <data name="ListCommandOnlineVersionFormat" xml:space="preserve">
+    <value>- {0} (mono disponible = {1} ) </value>
+  </data>
+  <data name="RegisterCommandDescription" xml:space="preserve">
+    <value>enregistrer une installation godot externe </value>
+  </data>
+  <data name="RegisterCommandCustomVersionArgumentDescription" xml:space="preserve">
+    <value>L'identifiant de version personnalisé à utiliser (c'est-à-dire "X.Y-dev") </value>
+  </data>
+  <data name="RegisterCommandPathArgumentDescription" xml:space="preserve">
+    <value>Le chemin vers l'installation de godot </value>
+  </data>
+  <data name="RegisterCommandCompletedMessage" xml:space="preserve">
+    <value>Enregistré {0}comme {1}</value>
+  </data>
+  <data name="RunCommandDescription" xml:space="preserve">
+    <value>Lanches Godot dans l'annuaire en cours </value>
+  </data>
+  <data name="RunCommandUseVersionOptionDescription" xml:space="preserve">
+    <value>La version à lancer </value>
+  </data>
+  <data name="RunCommandCmdLineArgumentDescription" xml:space="preserve">
+    <value>La ligne de commande à passer à Godot </value>
+  </data>
+  <data name="RunCommandCannotFindVersionMessage" xml:space="preserve">
+    <value>Impossible de trouver une version à exécuter. Spécifiez-le avec le paramètre -u &lt;version&gt;</value>
+  </data>
+  <data name="UninstallCommandDescription" xml:space="preserve">
+    <value>Désinstaller une version de Godot spécifique </value>
+  </data>
+  <data name="UninstallCommandVersionArgumentDescription" xml:space="preserve">
+    <value>La version à installer </value>
+  </data>
+  <data name="UninstallCommandUninstallingMessage" xml:space="preserve">
+    <value>Désinstallation {0}</value>
+  </data>
+  <data name="UninstallCommandUninstallCompleteMessage" xml:space="preserve">
+    <value>Godot {0}désinstallé. </value>
+  </data>
+  <data name="UnregisterCommandDescription" xml:space="preserve">
+    <value>Désinscrire une installation Godot externe </value>
+  </data>
+  <data name="UnregisterCommandCustomVersionArgumentDescription" xml:space="preserve">
+    <value>La version personnalisée à désinscrire (c'est-à-dire "X.Y-dev") </value>
+  </data>
+  <data name="UnregisterCommandUnregisterCompleteMessage" xml:space="preserve">
+    <value>Non enregistré {0}</value>
+  </data>
+  <data name="UnregisterCommandVersionNotExternalMessage" xml:space="preserve">
+    <value>La version {0} ne correspond pas à une version externe</value>
+  </data>
+</root>
