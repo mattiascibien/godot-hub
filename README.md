@@ -46,6 +46,11 @@ After installing the tool, you can use it from the command line and see what you
 godot-hub --help # (or godot-hub -h)
 ```
 
+# Localization
+
+You can help localizing this software by translating the messages in the resx files: a [Transifex Project](https://www.transifex.com/mattias-cibien/godot-hub/) is set up containing the main languages
+that the software supports. You can also request new languages to be added by using [Github Issues](https://github.com/mattiascibien/godot-hub/issues) using the `localization` label.
+
 # Development
 
 The project is developed using C#, [.NET](https://dotnet.microsoft.com/) 6.0 and [Visual Studio 2022](https://visualstudio.microsoft.com/) but it can be also developed
