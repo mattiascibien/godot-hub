@@ -34,7 +34,7 @@ namespace GodotHub.Local
             // find all the executables for the platforms
             // and return the one that has the highest priority
             return Directory.EnumerateFiles(InstallationPath)
-                .Where(x => EditorExecutable.IsEditorExecutable(x))
+                .Where(EditorExecutable.IsEditorExecutable)
                 .Select(x => new EditorExecutable(x))
                 .Where(x => x.IsSupported(osPlatform, architecture))
                 .OrderByDescending(x => x.Priority);
@@ -46,12 +46,7 @@ namespace GodotHub.Local
             if (!IsStable)
                 version += $"-{PostFix}";
 
-            if (HasMono)
-            {
-                return $"{version}-mono";
-            }
-
-            return version;
+            return HasMono ? $"{version}-mono" : version;
         }
 
         public bool Equals(OnlineGodotVersion? other)
@@ -65,10 +60,7 @@ namespace GodotHub.Local
             if (PostFix != other.PostFix)
                 return false;
 
-            if (HasMono != other.HasMono)
-                return false;
-
-            return true;
+            return HasMono == other.HasMono;
         }
     }
 }

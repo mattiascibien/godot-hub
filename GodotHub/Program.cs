@@ -29,7 +29,7 @@ namespace GodotHub
                         {
                             { "godothub_root", string.Format("$({0})/.godot-hub", OperatingSystem.IsWindows() ? "USERPROFILE" : "HOME") },
                             { "installation_directory", "$(godothub_root)/installations" },
-                            { "donwloads_directory", "$(godothub_root)/downloads" }
+                            { "downloads_directory", "$(godothub_root)/downloads" }
                         };
                         builder.AddInMemoryCollection(defaults);
 
@@ -59,7 +59,7 @@ namespace GodotHub
                     host.UseCommandHandler<InstallCommand, InstallCommand.CommandHandler>();
                     host.UseCommandHandler<UninstallCommand, UninstallCommand.CommandHandler>();
                     host.UseCommandHandler<CreateLocalConfigurationCommand, CreateLocalConfigurationCommand.CommandHandler>();
-                    host.UseCommandHandler<RegisterCommand, RegisterCommand.CommandHanlder>();
+                    host.UseCommandHandler<RegisterCommand, RegisterCommand.CommandHandler>();
                     host.UseCommandHandler<UnregisterCommand, UnregisterCommand.CommandHandler>();
                 })
             .UseDefaults()

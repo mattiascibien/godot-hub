@@ -32,11 +32,11 @@ namespace GodotHub.Commands
             {
                 await ListInstalledVersions().ConfigureAwait(false);
 
-                if (Online)
-                {
-                    Console.WriteLine("");
-                    await ListOnlineVersions().ConfigureAwait(false);
-                }
+                if (!Online)
+                    return 0;
+
+                Console.WriteLine("");
+                await ListOnlineVersions().ConfigureAwait(false);
 
                 return 0;
             }
@@ -50,10 +50,10 @@ namespace GodotHub.Commands
                     Console.WriteLine(Strings.ListCommandInstalledVersionsHeader);
                     foreach (var item in installedVersions)
                     {
-                        if (item.IsExternal)
-                            Console.WriteLine(Strings.ListCommandExternalVersionFormat, item);
-                        else
-                            Console.WriteLine(Strings.ListCommandLocalVersionFormat, item);
+                        Console.WriteLine(
+                            item.IsExternal
+                                ? Strings.ListCommandExternalVersionFormat
+                                : Strings.ListCommandLocalVersionFormat, item);
                     }
                 }).ConfigureAwait(false);
             }

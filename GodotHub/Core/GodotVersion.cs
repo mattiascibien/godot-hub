@@ -19,10 +19,7 @@
             if (PostFix != other.PostFix)
                 return false;
 
-            if (HasMono != other.HasMono)
-                return false;
-
-            return true;
+            return HasMono == other.HasMono;
         }
 
         public override bool Equals(object? obj) => Equals(obj as GodotVersion);

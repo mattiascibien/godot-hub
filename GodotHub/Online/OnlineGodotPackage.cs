@@ -58,10 +58,6 @@ namespace GodotHub.Online
             {
                 Architecture = Architecture.X64;
             }
-            else
-            {
-
-            }
         }
     }
 }

@@ -16,7 +16,7 @@ namespace GodotHub.Core.Windows
 
         public void DeleteFolderLink(string currentDirectory, string folderLink)
         {
-            string path = Path.Combine(currentDirectory, folderLink);
+            var path = Path.Combine(currentDirectory, folderLink);
             UACHelper.UACHelper.StartElevated(new ProcessStartInfo
             {
                 FileName = "cmd.exe",

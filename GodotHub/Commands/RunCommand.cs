@@ -10,7 +10,7 @@ namespace GodotHub.Commands
     {
         public RunCommand() : base("run", Strings.RunCommandDescription)
         {
-            Option<string?> versionOption = new Option<string?>("--use-version", () => null, Strings.RunCommandUseVersionOptionDescription);
+            var versionOption = new Option<string?>("--use-version", () => null, Strings.RunCommandUseVersionOptionDescription);
             versionOption.AddAlias("-u");
             AddOption(versionOption);
 

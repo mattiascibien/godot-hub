@@ -26,13 +26,9 @@ namespace GodotHub.Online
         {
             var releases = await _githubClient.Repository.Release.GetAll(OWNER, REPO).ConfigureAwait(false);
 
-            var latestRelease = releases.Where(x => !includeUnstable || x.Prerelease).OrderByDescending(x => x.TagName).FirstOrDefault();
-            if (latestRelease != null)
-            {
-                return CreateVersion(latestRelease);
-            }
+            var latestRelease = releases.Where(x => !includeUnstable || x.Prerelease).MaxBy(x => x.TagName);
 
-            return null;
+            return latestRelease != null ? CreateVersion(latestRelease) : null;
         }
 
         public async IAsyncEnumerable<OnlineGodotVersion> GetVersionsAsync()
@@ -74,10 +70,7 @@ namespace GodotHub.Online
 
             var release = releases.FirstOrDefault(r => r.TagName == code);
 
-            if (release == null)
-                return null;
-
-            return CreateVersion(release);
+            return release == null ? null : CreateVersion(release);
         }
     }
 }
