@@ -27,7 +27,7 @@ namespace GodotHub
                     {
                         var defaults = new Dictionary<string, string>()
                         {
-                            { "godothub_root", string.Format("$({0})/.godot-hub", OperatingSystem.IsWindows() ? "USERPROFILE" : "HOME") },
+                            { "godothub_root", $"$({(OperatingSystem.IsWindows() ? "USERPROFILE" : "HOME")})/.godot-hub" },
                             { "installation_directory", "$(godothub_root)/installations" },
                             { "downloads_directory", "$(godothub_root)/downloads" }
                         };
