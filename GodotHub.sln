@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GodotHub", "GodotHub\GodotH
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GodotHub.Tests", "GodotHub.Tests\GodotHub.Tests.csproj", "{E1B16875-A6B6-4927-B7EB-5E66CF8F60B2}"
 EndProject
-Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "GodotHub.WindowsStore", "GodotHub.WindowsStore\GodotHub.WindowsStore.wapproj", "{8476DBF8-C67D-4489-B017-3DB3F8484795}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,20 +41,6 @@ Global
 		{E1B16875-A6B6-4927-B7EB-5E66CF8F60B2}.Release|x64.Build.0 = Release|x64
 		{E1B16875-A6B6-4927-B7EB-5E66CF8F60B2}.Release|x86.ActiveCfg = Release|x86
 		{E1B16875-A6B6-4927-B7EB-5E66CF8F60B2}.Release|x86.Build.0 = Release|x86
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Debug|x64.ActiveCfg = Debug|x64
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Debug|x64.Build.0 = Debug|x64
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Debug|x64.Deploy.0 = Debug|x64
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Debug|x86.ActiveCfg = Debug|x86
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Debug|x86.Build.0 = Debug|x86
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Debug|x86.Deploy.0 = Debug|x86
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Release|Any CPU.ActiveCfg = Release|x64
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Release|x64.ActiveCfg = Release|x64
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Release|x64.Build.0 = Release|x64
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Release|x64.Deploy.0 = Release|x64
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Release|x86.ActiveCfg = Release|x86
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Release|x86.Build.0 = Release|x86
-		{8476DBF8-C67D-4489-B017-3DB3F8484795}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
