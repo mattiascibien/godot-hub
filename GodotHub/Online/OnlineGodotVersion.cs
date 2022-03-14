@@ -36,7 +36,7 @@ namespace GodotHub.Online
 
         public override string ToString()
         {
-            string version = Version.ToString();
+            var version = Version.ToString();
             if (!IsStable)
                 version += $"-{PostFix}";
 

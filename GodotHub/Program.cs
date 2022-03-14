@@ -27,15 +27,15 @@ namespace GodotHub
                     {
                         var defaults = new Dictionary<string, string>()
                         {
-                            { "godothub_root", string.Format("$({0})/.godot-hub", OperatingSystem.IsWindows() ? "USERPROFILE" : "HOME") },
+                            { "godothub_root", $"$({(OperatingSystem.IsWindows() ? "USERPROFILE" : "HOME")})/.godot-hub" },
                             { "installation_directory", "$(godothub_root)/installations" },
-                            { "donwloads_directory", "$(godothub_root)/downloads" }
+                            { "downloads_directory", "$(godothub_root)/downloads" }
                         };
                         builder.AddInMemoryCollection(defaults);
 
                         builder.AddEnvironmentVariables("GODOTHUB_");
                         builder.AddJsonFile(GodotHubPaths.LocalConfigFilename, optional: true, reloadOnChange: true); // this is relative to the current directory
-                        builder.EnableSubstitutions("$(", ")", exceptionOnMissingVariables: true);
+                        builder.EnableSubstitutions("$(", ")");
                     });
 
                     host.ConfigureServices(services =>
@@ -59,7 +59,7 @@ namespace GodotHub
                     host.UseCommandHandler<InstallCommand, InstallCommand.CommandHandler>();
                     host.UseCommandHandler<UninstallCommand, UninstallCommand.CommandHandler>();
                     host.UseCommandHandler<CreateLocalConfigurationCommand, CreateLocalConfigurationCommand.CommandHandler>();
-                    host.UseCommandHandler<RegisterCommand, RegisterCommand.CommandHanlder>();
+                    host.UseCommandHandler<RegisterCommand, RegisterCommand.CommandHandler>();
                     host.UseCommandHandler<UnregisterCommand, UnregisterCommand.CommandHandler>();
                 })
             .UseDefaults()

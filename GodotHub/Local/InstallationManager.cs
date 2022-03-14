@@ -1,4 +1,5 @@
-﻿using GodotHub.Core;
+﻿using System.Collections.Immutable;
+using GodotHub.Core;
 using System.Diagnostics;
 using System.IO.Compression;
 
@@ -18,10 +19,7 @@ namespace GodotHub.Local
 
         public IEnumerable<LocalGodotVersion> GetInstalledVersions()
         {
-            foreach (var item in Directory.EnumerateDirectories(_installationPath))
-            {
-                yield return new LocalGodotVersion(item, _linkCreator.IsLink(item));
-            }
+            return Directory.EnumerateDirectories(_installationPath).Select(item => new LocalGodotVersion(item, _linkCreator.IsLink(item)));
         }
 
         public LocalGodotVersion? FindInstalledVersion(string version)
@@ -38,7 +36,7 @@ namespace GodotHub.Local
                 if(isHeadless)
                     versionName = $"{versionName}-headless";
 
-                string destinationDirectory = _installationPath;
+                var destinationDirectory = _installationPath;
 
                 using var stream = File.OpenRead(packageFile);
                 using var archive = new ZipArchive(stream);
@@ -50,12 +48,12 @@ namespace GodotHub.Local
 
                 archive.ExtractToDirectory(destinationDirectory, true);
 
-                if (isMono)
-                {
-                    var directoryToRename = archive.Entries[0].FullName;
+                if (!isMono) 
+                    return;
 
-                    Directory.Move(Path.Combine(destinationDirectory, directoryToRename), Path.Combine(destinationDirectory, $"{versionName}-mono"));
-                }
+                var directoryToRename = archive.Entries[0].FullName;
+
+                Directory.Move(Path.Combine(destinationDirectory, directoryToRename), Path.Combine(destinationDirectory, $"{versionName}-mono"));
 
             }).ConfigureAwait(false);
         }
@@ -78,12 +76,12 @@ namespace GodotHub.Local
             var installedVersion = FindInstalledVersion(version);
             if (installedVersion != null)
             {
-                (var osPlatform, var architecture) = CurrentOS.GetOsInfo();
-                var editorPaths = installedVersion.GetSupportedEditorExecutables(osPlatform, architecture);
+                var (osPlatform, architecture) = CurrentOS.GetOsInfo();
+                var editorPaths = installedVersion.GetSupportedEditorExecutables(osPlatform, architecture).ToImmutableList();
 
-                if (editorPaths.Any())
+                if (editorPaths.Count > 0)
                 {
-                    Process.Start(new ProcessStartInfo(editorPaths.First().EditorPath, string.Join(" ", commandLine))
+                    Process.Start(new ProcessStartInfo(editorPaths[0].EditorPath, string.Join(" ", commandLine))
                     {
                         //UseShellExecute = true
                     });

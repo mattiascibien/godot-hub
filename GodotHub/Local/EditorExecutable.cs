@@ -6,7 +6,7 @@ namespace GodotHub.Local
 {
     public class EditorExecutable : IOsSpecific
     {
-        private static readonly Dictionary<string, int> Priorities = new Dictionary<string, int>()
+        private static readonly Dictionary<string, int> Priorities = new()
         {
             { ".tools.", 1000 },
             { ".opt.", 900 },
@@ -26,8 +26,8 @@ namespace GodotHub.Local
         {
             EditorPath = path;
 
-            string fileName = Path.GetFileName(EditorPath);
-            string extension = Path.GetExtension(EditorPath);
+            var fileName = Path.GetFileName(EditorPath);
+            var extension = Path.GetExtension(EditorPath);
 
             IsMono = fileName.Contains("mono"); // this is needed for 
 
@@ -57,10 +57,7 @@ namespace GodotHub.Local
 
         public static bool IsEditorExecutable(string path)
         {
-            if (System.OperatingSystem.IsWindows())
-                return IsEditorExecutableWindows(path);
-            else
-                return IsEditorExecutableUnix(path);
+            return System.OperatingSystem.IsWindows() ? IsEditorExecutableWindows(path) : IsEditorExecutableUnix(path);
         }
 
         private static bool IsEditorExecutableUnix(string path)

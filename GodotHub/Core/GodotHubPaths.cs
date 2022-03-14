@@ -15,7 +15,7 @@ namespace GodotHub.Core
         public GodotHubPaths(IConfiguration config)
         {
             InstallationDirectory = config["installation_directory"];
-            DownloadsDirectory = config["donwloads_directory"];
+            DownloadsDirectory = config["downloads_directory"];
 
             if (!Directory.Exists(InstallationDirectory))
                 Directory.CreateDirectory(InstallationDirectory);

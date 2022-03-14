@@ -17,12 +17,12 @@
             if (!Directory.Exists(outDirectory))
                 Directory.CreateDirectory(outDirectory);
 
-            string outFileName = Path.GetFileName(_uri);
+            var outFileName = Path.GetFileName(_uri);
 
             var response = await _httpClient.GetAsync(_uri).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
-            string fileName = Path.Combine(outDirectory, outFileName);
+            var fileName = Path.Combine(outDirectory, outFileName);
             var totalBytes = response.Content.Headers.ContentLength;
             await using var ms = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
             await ProcessContentStreamAsync(fileName, totalBytes, ms, progress).ConfigureAwait(false);
@@ -37,7 +37,7 @@
             var buffer = new byte[8192];
             var isMoreToRead = true;
 
-            using var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
+            await using var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
 
             do
             {
@@ -62,11 +62,10 @@
 
         private static void TriggerProgressChanged(IProgress<float> progress, long? totalDownloadSize, long totalBytesRead)
         {
-            if (totalDownloadSize.HasValue)
-            {
-                float progressPercentage = (float)totalBytesRead / totalDownloadSize.Value;
-                progress.Report(progressPercentage);
-            }
+            if (!totalDownloadSize.HasValue) return;
+
+            var progressPercentage = (float)totalBytesRead / totalDownloadSize.Value;
+            progress.Report(progressPercentage);
         }
 
         public void Dispose()

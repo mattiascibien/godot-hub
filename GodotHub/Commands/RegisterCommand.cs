@@ -13,7 +13,7 @@ namespace GodotHub.Commands
             Add(new Argument<string>("path", Strings.RegisterCommandPathArgumentDescription));
         }
 
-        public class CommandHanlder : ICommandHandler
+        public class CommandHandler : ICommandHandler
         {
             private readonly GodotHubPaths _constants;
             private readonly ILinkCreator _linkCreator;
@@ -22,7 +22,7 @@ namespace GodotHub.Commands
 
             public string Path { get; set; } = "";
 
-            public CommandHanlder(GodotHubPaths constants, ILinkCreator linkCreator)
+            public CommandHandler(GodotHubPaths constants, ILinkCreator linkCreator)
             {
                 _constants = constants;
                 _linkCreator = linkCreator;

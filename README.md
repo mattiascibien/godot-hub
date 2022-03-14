@@ -18,10 +18,6 @@ Command line tool to install and use godot versions
 Download the appropriate file from the GitHub releases (or artifact from CI) for your desired platform
 and extract it on some directory available on your `$PATH`.
 
-## Windows Store
-
-The app will be published on the Windows Store soon. It will be installable form there and will act like a tool installed in your path `$PATH`.
-
 ## As a `dotnet` tool
 
 You need to have the `dotnet` CLI installed on your system and the [.NET 6.0 Runtime](https://dotnet.microsoft.com/download/dotnet/6.0).

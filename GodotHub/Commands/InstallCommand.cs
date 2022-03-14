@@ -75,7 +75,7 @@ namespace GodotHub.Commands
                     return 1;
                 }
 
-                (var osPlatform, var architecture) = CurrentOS.GetOsInfo();
+                var (osPlatform, architecture) = CurrentOS.GetOsInfo();
                 var packageToDownload = versionToDownload.GetPackageForSystem(osPlatform, architecture, Mono, Headless);
 
                 if (packageToDownload == null)
@@ -92,10 +92,10 @@ namespace GodotHub.Commands
 
             private async Task DownloadAndExtract(OnlineGodotPackage packageToDownload)
             {
-                using var fileDonwloader = new FileDownloader(packageToDownload.DownloadUrl.ToString());
+                using var fileDownloader = new FileDownloader(packageToDownload.DownloadUrl.ToString());
 
                 using var progressbar = new ProgressBar(10000, Strings.InstallCommandDownloadingMessage);
-                var outFile = await fileDonwloader.DownloadFileAsync(_constants.DownloadsDirectory, progressbar.AsProgress<float>()).ConfigureAwait(false);
+                var outFile = await fileDownloader.DownloadFileAsync(_constants.DownloadsDirectory, progressbar.AsProgress<float>()).ConfigureAwait(false);
 
                 await _installationManager.InstallPackageAsync(Version, outFile, Mono, Headless).ConfigureAwait(false);
             }

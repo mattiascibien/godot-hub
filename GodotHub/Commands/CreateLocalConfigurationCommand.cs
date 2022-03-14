@@ -21,7 +21,7 @@ namespace GodotHub.Commands
         {
             private readonly IConfiguration _configuration;
 
-            private static readonly JsonWriterOptions options = new()
+            private static readonly JsonWriterOptions Options = new()
             {
                 Indented = true
             };
@@ -37,14 +37,14 @@ namespace GodotHub.Commands
 
             public async Task<int> InvokeAsync(InvocationContext context)
             {
-                string? currentVersion = UseVersion;
+                var currentVersion = UseVersion;
                 if (currentVersion == null && Migrate && File.Exists(GodotHubPaths.VersionFileName))
                 {
                     currentVersion = await File.ReadAllTextAsync(GodotHubPaths.VersionFileName).ConfigureAwait(false);
                 }
 
-                using var stream = File.OpenWrite(GodotHubPaths.LocalConfigFilename);
-                using var writer = new Utf8JsonWriter(stream, options);
+                await using var stream = File.OpenWrite(GodotHubPaths.LocalConfigFilename);
+                await using var writer = new Utf8JsonWriter(stream, Options);
 
                 writer.WriteStartObject();
 
